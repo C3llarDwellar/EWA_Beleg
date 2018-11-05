@@ -28,32 +28,113 @@
         </button>
 
         <div class="navbar-collapse collapse" id="navbarContent">
-            <div class="navbar-nav">
+
+            <!-- left elements -->
+            <ul class="navbar-nav mr-auto">
                 <!-- home-button -->
-                <a class="nav-item nav-link active" href="#">Home <span class="sr-only">(current)</span></a>
+                <li class="nav-item">
+                    <a class="nav-link active" href="#">Home <span class="sr-only">(current)</span></a>
+                </li>
 
                 <!-- dropdown-menu -->
-                <div class="nav-item dropdown">
-                    <a class="nav-link dropdown-toggle" href="#" id="navbarDropdownMenu" role="button"
-                       data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">Future Tasks</a>
-                    <div class="dropdown-menu" aria-labelledby="navbarDropdownMenu">
-                        <a class="dropdown-item" href="#">A future task</a>
-                        <a class="dropdown-item" href="#">Another task</a>
-                        <a class="dropdown-item" href="#">Yet one more task</a>
+                <li class="nav-item">
+                    <div class="dropdown">
+                        <a class="nav-link dropdown-toggle" href="#" id="navbarDropdownMenu" role="button"
+                           data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">Future Tasks</a>
+                        <div class="dropdown-menu" aria-labelledby="navbarDropdownMenu">
+                            <a class="dropdown-item" href="#">A future task</a>
+                            <a class="dropdown-item" href="#">Another task</a>
+                            <a class="dropdown-item" href="#">Yet one more task</a>
+                        </div>
                     </div>
-                </div>
+                </li>
 
-                <a class="nav-item nav-link" href="#">Administration</a>
-            </div>
+                <!-- administration -->
+                <li class="nav-item">
+                    <a class="nav-link" href="#">Administration</a>
+                </li>
+            </ul>
+
+            <!-- right elements -->
+            <ul class="navbar-nav ml-auto">
+                <!-- login button -->
+                <li class="nav-item">
+                    <button type="button" class="btn btn-light" id="btnSignUp" data-toggle="modal"
+                            data-target="#signUpModal">Sign Up
+                    </button>
+                </li>
+            </ul>
         </div>
     </div>
 </nav>
 
 
+<!-- dialog form for sign up -->
+<div class="modal fade" id="signUpModal" tabindex="-1" role="dialog" aria-labelledby="signUpModalLabel"
+     aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="exampleModalLabel">Sign Up</h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="modal-body">
+                <!-- actual form for signing up -->
+                <!-- TODO: make fields required -->
+                <form>
+                    <div class="form-group">
+                        <label for="signUpFormFName">First Name</label>
+                        <input type="text" class="form-control" id="signUpFormFName" pattern=".{2,}">
+                    </div>
+                    <div class="form-group">
+                        <label for="signUpFormLName">Last Name</label>
+                        <input type="text" class="form-control" id="signUpFormLName" pattern=".{2,}">
+                    </div>
+                    <div class="form-group">
+                        <label for="signUpFormEMail">Email address</label>
+                        <input type="email" class="form-control" id="signUpFormEMail"
+                               placeholder="name@example.com">
+
+                        <!-- TODO: test email with html5 emailadr -->
+
+                    </div>
+                    <div class="form-group">
+                        <label for="signUpFormURL">Customer URL</label>
+                        <input type="url" class="form-control" id="signUpFormURL">
+                    </div>
+                    <div class="form-group">
+                        <label for="signUpFormAge">Age</label>
+                        <input type="number" class="form-control" id="signUpFormAge" min="5" max="100">
+                    </div>
+                    <div class="form-group">
+                        <label for="signUpFormRange">Range of emotional comfort</label>
+                        <input type="range" class="custom-range" id="signUpFormRange" min="0" max="10">
+
+                        <!-- TODO: numerical labels for increased readability -->
+                        <!-- TODO: give this thing a proper name -->
+                    </div>
+                    <div class="form-group">
+
+                        <!-- TODO: text field thingy -->
+
+                    </div>
+                </form>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-dismiss="modal">Cancel</button>
+                <button type="button" class="btn btn-primary">Submit</button>
+            </div>
+        </div>
+    </div>
+</div>
+
+
 <!-- main -->
 <main class="container">
     <div class="row">
-        <div class="col-9 text-justify">
+        <div class="col-9 text-justify" id="article">
             <h3>Main content section</h3>
             <!-- lorem ipsum placeholder -->
             <span>Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod tempor invidunt ut labore et dolore magna aliquyam erat, sed diam voluptua. At vero eos et accusam et justo duo dolores et ea rebum. Stet clita kasd gubergren, no sea takimata sanctus est Lorem ipsum dolor sit amet. Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod tempor invidunt ut labore et dolore magna aliquyam erat, sed diam voluptua. At vero eos et accusam et justo duo dolores et ea rebum. Stet clita kasd gubergren, no sea takimata sanctus est Lorem ipsum dolor sit amet. Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod tempor invidunt ut labore et dolore magna aliquyam erat, sed diam voluptua. At vero eos et accusam et justo duo dolores et ea rebum. Stet clita kasd gubergren, no sea takimata sanctus est Lorem ipsum dolor sit amet.
@@ -96,7 +177,7 @@ Duis autem vel eum iriure dolor in hendrerit in vulputate velit esse molestie co
 
 At vero eos et accusam et justo duo dolores et ea rebum. Stet clita kasd gubergren, no sea takimata sanctus est Lorem ipsum dolor sit amet. Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod tempor invidunt ut labore et dolore magna aliquyam erat, sed diam voluptua. At vero eos et accusam et justo duo dolores et ea rebum. Stet clita kasd gubergren, no sea takimata sanctus est Lorem ipsum dolor sit amet. Lorem ipsum dolor sit amet, consetetur sadipscing elitr, At accusam aliquyam diam diam dolore dolores duo eirmod eos erat, et nonumy sed tempor et et invidunt justo labore Stet clita ea et gubergren, kasd magna no rebum. sanctus sea sed takimata ut vero voluptua. est Lorem ipsum dolor sit amet. Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod tempor invidunt ut labore et dolore magna aliquyam erat. </span>
         </div>
-        <div class="col-3">
+        <div class="col-3" id="aside">
             <h3>News section</h3>
             <!-- lorem ipsum placeholder -->
             <span>Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod tempor invidunt ut labore et dolore magna aliquyam erat, sed diam voluptua. At vero eos et accusam et justo duo dolores et ea rebum. Stet clita kasd gubergren, no sea takimata sanctus est Lorem ipsum dolor sit amet. Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod tempor invidunt ut labore et dolore magna aliquyam erat, sed diam voluptua. At vero eos et accusam et justo duo dolores et ea rebum. Stet clita kasd gubergren, no sea takimata sanctus est Lorem ipsum dolor sit amet. Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod tempor invidunt ut labore et dolore magna aliquyam erat, sed diam voluptua. At vero eos et accusam et justo duo dolores et ea rebum. Stet clita kasd gubergren, no sea takimata sanctus est Lorem ipsum dolor sit amet.
@@ -144,12 +225,12 @@ At vero eos et accusam et justo duo dolores et ea rebum. Stet clita kasd gubergr
 
 
 <!-- footer -->
-<!-- "fixed-bottom" can be removed after testing -->
-<footer class="footer bg-light fixed-bottom">
+<!-- "fixed-bottom" can be added -->
+<footer class="footer bg-light">
     <div class="container text-muted text-center">
         <div class="row">
             <div class="col-4">
-                <a href="contact.html">Contact</a>
+                <a href="contact.html">Imprint</a>
             </div>
             <div class="col-4">
                 <span>E-Mail:
@@ -166,7 +247,8 @@ At vero eos et accusam et justo duo dolores et ea rebum. Stet clita kasd gubergr
 </footer>
 
 
-<!-- script integration -->
+<!-- scripting -->
+<!-- jquery integration -->
 <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js"
         integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo"
         crossorigin="anonymous"></script>
