@@ -6,7 +6,7 @@ Karl Bretschneider 	-> s72790
 
 141.56.131.108 -->Filzilla (zum Upload)
 
-******************************************
+++++++++++++++++++++++++++++++++++++++++++
 
 irgendnenspezial ACC vom Wiedemann:
 ewaconf
@@ -23,3 +23,10 @@ G12
 ru37w
 
 http://ivm108.informatik.htw-dresden.de/ewa/G12/
+
+++++++++++++++++++++++++++++++++++++++++++
+
+http://ivm108.informatik.htw-dresden.de/_myadmin/server_sql.php
+
+uname: ewa
+pw: 2018
