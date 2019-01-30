@@ -82,19 +82,21 @@ if (isset($_GET['trigger'])){
 if (isset($_GET['searchRequest'])){
     // search input as lowercase for case insensitivity
     $search =strtolower($_GET['searchRequest']);
-    $htmlString="";
-    $cards = [];
 
-    $j = 0;     // amount of returned cards
+    if ($search !== "") {
+        $htmlString="";
+        $cards = [];
 
-    for ($i = 0; $i < sizeof($id); $i++) {
-        // convert all to lowercase for case insensitivity
-        $lowerTitle = strtolower($title[$i]);
-        $lowerAuthor = strtolower($author[$i]);
+        $j = 0;     // amount of returned cards
 
-        if (strpos($lowerTitle, $search) !== false || strpos($lowerAuthor, $search) !== false) {
+        for ($i = 0; $i < sizeof($id); $i++) {
+            // convert all to lowercase for case insensitivity
+            $lowerTitle = strtolower($title[$i]);
+            $lowerAuthor = strtolower($author[$i]);
 
-            $cardString = "
+            if (strpos($lowerTitle, $search) !== false || strpos($lowerAuthor, $search) !== false) {
+
+                $cardString = "
             <div class='col-3'>
                 <div class='card w-100 h-100' data-id='" . $id[$i] . "' data-product='" . $title[$i] . "'>
                     <div class='card-body'>
@@ -104,23 +106,48 @@ if (isset($_GET['searchRequest'])){
                 </div>
             </div>";
 
-            array_push($cards, $cardString);
+                array_push($cards, $cardString);
+            }
         }
+
+        for ($i = 0; $i < sizeof($cards); $i++) {
+            if ($i % 4 == 0 || $i == 0) {
+                $htmlString .= "<div class='row'>";
+            }
+
+            $htmlString .= $cards[$i];
+
+            if ($i % 4 == 3 || $i == sizeof($cards) - 1) {
+                $htmlString .= "</div>";
+            }
+        }
+
+        echo $htmlString;
+    } else {
+        $htmlString = "";
+
+        for ($i = 0; $i < sizeof($id); $i++) {
+            if ($i % 4 == 0 || $i == 0) {
+                $htmlString .= "<div class='row'>";
+            }
+
+            $htmlString .= "
+            <div class='col-3 d-flex align-items-stretch'>
+                <div class='card w-100 h-100' data-id='" . $id[$i] . "' data-product='" . $title[$i] . "'>
+                    <div class='card-body'>
+                        <h5 class='card-title'>" . $title[$i] . "</h5>
+                        <h6 class='card-subtitle'>" . $author[$i] . "</h6>
+                    </div>
+                </div>
+            </div>";
+
+            if ($i % 4 == 3 || $i == sizeof($id) - 1) {
+                $htmlString .= "</div>";
+            }
+        }
+
+        echo $htmlString;
     }
-
-    for ($i = 0; $i < sizeof($cards); $i++) {
-        if ($i % 4 == 0 || $i == 0) {
-            $htmlString .= "<div class='row'>";
-        }
-
-        $htmlString .= $cards[$i];
-
-        if ($i % 4 == 3 || $i == sizeof($cards) - 1) {
-            $htmlString .= "</div>";
-        }
-    }
-
-    echo $htmlString;
 }
 
 if (isset($_GET['stockTrigger'])) {
