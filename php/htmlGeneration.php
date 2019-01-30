@@ -78,47 +78,4 @@ if (isset($_GET['trigger'])){
 
     echo $htmlString;
 }
-
-/*
-function buildArticleCards($id, $title, $author)
-{
-    $htmlString = "";
-
-    for ($i = 0; $i < sizeof($id); $i++) {
-        if ($i % 4 == 0 || $i == 0) {
-            $htmlString .= "<div class='row'>";
-        }
-
-        $htmlString .= "
-            <div class='col-3 d-flex align-items-stretch'>
-                <div class='card w-100 h-100' data-id='" . $id[$i] . "' data-product='" . $title[$i] . "'>
-                    <div class='card-body'>
-                        <h5 class='card-title'>" . $title[$i] . "</h5>
-                        <h6 class='card-subtitle'>" . $author[$i] . "</h6>
-                    </div>
-                </div>
-            </div>";
-
-        if ($i % 4 == 3 || $i == sizeof($id) - 1) {
-            $htmlString .= "</div>";
-        }
-    }
-
-    return $htmlString;
-}
-
-
-function buildArticleModalContent($id, $isbn, $title, $author, $publisher, $price, $stock, $summary, $weight)
-{
-    $htmlString = $GLOBALS['articleId'];
-
-    for ($i = 0; $i < sizeof($id); $i++) {
-        if ($id[$i] == $articleId) {
-            $htmlString .= "<span>" . $author[$i] . "</span>";
-        }
-    }
-
-    return $htmlString;
-}
-*/
 ?>

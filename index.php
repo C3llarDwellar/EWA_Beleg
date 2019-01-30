@@ -60,7 +60,7 @@
 
                 <!-- administration -->
                 <li class="nav-item">
-                    <a class="nav-link" href="#">Administration</a>
+                    <a class="nav-link" href="daten/stockCatalogue.html">Administration</a>
                 </li>
             </ul>
 
@@ -234,7 +234,6 @@ Duis autem vel eum iriure dolor in hendrerit in vulputate velit esse molestie co
     let htmlString = "";    //string that is filled with dynamic html
 
     $(document).ready(function () {
-
         $.ajax({
             url: 'php/htmlGeneration.php',
             type: 'GET',
