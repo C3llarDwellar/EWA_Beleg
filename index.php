@@ -11,9 +11,8 @@
           integrity="sha384-MCw98/SFnGE8fJT3GXwEOngsV7Zt27NXFoaoApmYm81iuXoPkFOJwJ8ERdknLPMO" crossorigin="anonymous">
     <link rel="stylesheet" href="daten/main-container-padding.css">
     <!--jquery integration-->
-    <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js"
-            integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo"
-            crossorigin="anonymous"></script>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+
     <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.3/umd/popper.min.js"
             integrity="sha384-ZMP7rVo3mIykV+2+9J3UJ46jBk0WLaUAdn689aCwoqbBJiSnjAK/l8WvCWPIPm49"
             crossorigin="anonymous"></script>
@@ -21,38 +20,9 @@
             integrity="sha384-ChfqqxuZUCnJSK3+MXmPNIyE6ZbWh2IMqE241rYiqJxyMiZ6OW/JmZQ5stwEULTy"
             crossorigin="anonymous"></script>
 
-    <!--custom javascript-->
-
     <title>Bookstore of Group G12</title>
 </head>
 <body>
-
-<?php
-include "php/databaseOperations.php";
-include "php/htmlGeneration.php";
-
-$result = databaseConnect("localhost", "G12", "ru37w", "g12");
-
-$isbn = [];
-$title = [];
-$author = [];
-$publisher = [];
-$price = [];
-$stock = [];
-$summary = [];
-$weight = [];
-
-while ($row = $result->fetch_assoc()) {
-    array_push($isbn, $row["Produktcode"]);
-    array_push($title, $row["Produkttitel"]);
-    array_push($author, $row["Autorname"]);
-    array_push($publisher, $row["Verlagsname"]);
-    array_push($price, $row["PreisNetto"]);
-    array_push($stock, $row["Lagerbestand"]);
-    array_push($summary, $row["Kurzinhalt"]);
-    array_push($weight, $row["Gewicht"]);
-}
-?>
 
 <!--navbar header-->
 <nav class="navbar navbar-expand-md navbar-light bg-light fixed-top">
@@ -207,12 +177,6 @@ while ($row = $result->fetch_assoc()) {
     <div class="row">
         <div class="col-9 text-justify" id="article">
             <h3>Main content section</h3>
-
-            <?php
-            $html = buildArticleCards($title, $author);
-            echo $html;
-            ?>
-
         </div>
         <div class="col-3" id="aside">
             <h3>News section</h3>
@@ -271,31 +235,45 @@ Duis autem vel eum iriure dolor in hendrerit in vulputate velit esse molestie co
 <!--scripting-->
 <script>
     let main = $('main');   //main body element
+    let id;                 //articleID of the card that was clicked
     let product;            //product whose card is clicked and which calls the modal
+    let htmlString = "";    //string that is filled with dynamic html
 
     $(document).ready(function () {
+
+        $.ajax({
+            url: 'php/htmlGeneration.php',
+            type: 'GET',
+            data: {trigger:""},
+            success: function (data) {
+                htmlString = data;
+                $('#article').append(htmlString)
+            }
+        });
+
         $('#signUpFormRangeValue').text($('#signUpFormRange').val());
 
         //on-click function that handles every click on any of the generated cards
         main.on('click', 'div.card', function () {
+            id = $(this).data('id');
             product = $(this).data('product');
-            $('#productDetailModal').modal('show');
 
-            //TODO: pass clicked card value to php (product)
-            //TODO: call php-function that builds the modal
-
-            <?php
-            $html = buildArticleModalContent();
-            ?>
+            $.ajax({
+                url: 'php/htmlGeneration.php',
+                type: 'GET',
+                data: {articleId: id},
+                success: function (data) {
+                    htmlString = data;
+                    $('#productDetailModal').modal('show');
+                }
+            });
         });
 
-        $('#productDetailModal').on('show.bs.modal', function() {
+        $('#productDetailModal').on('show.bs.modal', function () {
             let modal = $(this);
             modal.find('.modal-title').text(product);
             modal.find('.modal-body').empty();
-            modal.find('.modal-body').append(<?php
-                    //TODO: echo dat shit here to fill the modal
-                ?>);
+            modal.find('.modal-body').append(htmlString);
         })
     });
 
