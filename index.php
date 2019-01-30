@@ -92,6 +92,12 @@ while ($row = $result->fetch_assoc()) {
                 <li class="nav-item">
                     <a class="nav-link" href="#">Administration</a>
                 </li>
+
+                <li class="nav-item">
+                    <form>
+                        <input type="text" name="search" placeholder="Search..">
+                    </form>
+                </li>
             </ul>
 
             <!-- right elements -->
