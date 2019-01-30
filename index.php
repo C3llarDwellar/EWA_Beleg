@@ -60,7 +60,7 @@
 
                 <!-- administration -->
                 <li class="nav-item">
-                    <a class="nav-link" href="#">Administration</a>
+                    <a class="nav-link" href="daten/stockCatalogue.php">Administration</a>
                 </li>
 
                 <li class="nav-item">
@@ -243,7 +243,6 @@ Duis autem vel eum iriure dolor in hendrerit in vulputate velit esse molestie co
     let searchString;       //what's in the search bar
 
     $(document).ready(function () {
-
         $.ajax({
             url: 'php/htmlGeneration.php',
             type: 'GET',
