@@ -6,12 +6,12 @@
  * Time: 00:57
  */
 
+/*
 $host = "localhost";
 $username = "G12";
 $password = "ru37w";
 $dbname = "g12";
-
-
+*/
 
 function databaseConnect ($host, $username, $password, $dbname){
     $query = "SELECT * FROM buecher";

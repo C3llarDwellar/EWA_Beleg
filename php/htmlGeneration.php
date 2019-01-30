@@ -17,7 +17,7 @@ function buildArticleCards ($titles, $authors) {
 
         $htmlString .= "
             <div class='col-3 d-flex align-items-stretch'>
-                <div class='card w-100 h-100'>
+                <div class='card w-100 h-100' data-product='". $titles[$i] ."'>
                     <div class='card-body'>
                         <h5 class='card-title'>" . $titles[$i] . "</h5>
                         <h6 class='card-subtitle'>" . $authors[$i] . "</h6>

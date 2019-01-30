@@ -22,7 +22,6 @@
             crossorigin="anonymous"></script>
 
     <!--custom javascript-->
-    <script src=""></script>
 
     <title>Bookstore of Group G12</title>
 </head>
@@ -251,15 +250,22 @@ Duis autem vel eum iriure dolor in hendrerit in vulputate velit esse molestie co
 
 <!--scripting-->
 <script>
-    let main = $('main');
+    let main = $('main');   //main body element
+    let product;            //product whose card is clicked and which calls the modal
 
     $(document).ready(function () {
         $('#signUpFormRangeValue').text($('#signUpFormRange').val());
 
         //on-click function that handles every click on any of the generated cards
         main.on('click', 'div.card', function () {
+            product = $(this).data('product');
             $('#productDetailModal').modal('show');
         });
+
+        $('#productDetailModal').on('show.bs.modal', function() {
+            let modal = $(this);
+            modal.find('.modal-title').text(product);
+        })
     });
 
     // update slider value on slider change
