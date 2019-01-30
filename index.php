@@ -32,11 +32,25 @@ include "php/databaseOperations.php";
 include "php/htmlGeneration.php";
 
 $result = databaseConnect("localhost", "G12", "ru37w", "g12");
-$titles = [];
-$authors = [];
+
+$isbn = [];
+$title = [];
+$author = [];
+$publisher = [];
+$price = [];
+$stock = [];
+$summary = [];
+$weight = [];
+
 while ($row = $result->fetch_assoc()) {
-    array_push($titles, $row["Produkttitel"]);
-    array_push($authors, $row["Autorname"]);
+    array_push($isbn, $row["Produktcode"]);
+    array_push($title, $row["Produkttitel"]);
+    array_push($author, $row["Autorname"]);
+    array_push($publisher, $row["Verlagsname"]);
+    array_push($price, $row["PreisNetto"]);
+    array_push($stock, $row["Lagerbestand"]);
+    array_push($summary, $row["Kurzinhalt"]);
+    array_push($weight, $row["Gewicht"]);
 }
 ?>
 
@@ -189,7 +203,7 @@ while ($row = $result->fetch_assoc()) {
             <h3>Main content section</h3>
 
             <?php
-            $html = buildArticleCards($titles, $authors);
+            $html = buildArticleCards($title, $author);
             echo $html;
             ?>
 
@@ -260,11 +274,22 @@ Duis autem vel eum iriure dolor in hendrerit in vulputate velit esse molestie co
         main.on('click', 'div.card', function () {
             product = $(this).data('product');
             $('#productDetailModal').modal('show');
+
+            //TODO: pass clicked card value to php (product)
+            //TODO: call php-function that builds the modal
+
+            <?php
+            $html = buildArticleModalContent();
+            ?>
         });
 
         $('#productDetailModal').on('show.bs.modal', function() {
             let modal = $(this);
             modal.find('.modal-title').text(product);
+            modal.find('.modal-body').empty();
+            modal.find('.modal-body').append(<?php
+                    //TODO: echo dat shit here to fill the modal
+                ?>);
         })
     });
 
