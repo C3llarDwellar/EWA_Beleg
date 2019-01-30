@@ -287,14 +287,10 @@ Duis autem vel eum iriure dolor in hendrerit in vulputate velit esse molestie co
                 type: 'GET',
                 data: {searchRequest: searchString},
                 success: function (data) {
-                    search.css("background-color", "yellow");
                     htmlString = data;
                     let article = $('#article');
                     article.empty();
                     article.append(htmlString);
-                },
-                error: function () {
-                    search.css("background-color", "red");
                 }
             });
         });
