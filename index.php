@@ -62,6 +62,12 @@
                 <li class="nav-item">
                     <a class="nav-link" href="daten/stockCatalogue.php">Administration</a>
                 </li>
+
+                <li class="nav-item">
+                    <form>
+                        <input id="search" type="text" name="search" placeholder="Search..">
+                    </form>
+                </li>
             </ul>
 
             <!-- right elements -->
@@ -173,7 +179,7 @@
             <h3>Main content section</h3>
         </div>
         <div class="col-3" id="aside">
-            <h3>News section</h3>
+            <h3 id="news">News section</h3>
             <!--lorem ipsum placeholder-->
             <span>Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod tempor invidunt ut labore et dolore magna aliquyam erat, sed diam voluptua. At vero eos et accusam et justo duo dolores et ea rebum. Stet clita kasd gubergren, no sea takimata sanctus est Lorem ipsum dolor sit amet. Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod tempor invidunt ut labore et dolore magna aliquyam erat, sed diam voluptua. At vero eos et accusam et justo duo dolores et ea rebum. Stet clita kasd gubergren, no sea takimata sanctus est Lorem ipsum dolor sit amet. Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod tempor invidunt ut labore et dolore magna aliquyam erat, sed diam voluptua. At vero eos et accusam et justo duo dolores et ea rebum. Stet clita kasd gubergren, no sea takimata sanctus est Lorem ipsum dolor sit amet.
 
@@ -233,6 +239,9 @@ Duis autem vel eum iriure dolor in hendrerit in vulputate velit esse molestie co
     let product;            //product whose card is clicked and which calls the modal
     let htmlString = "";    //string that is filled with dynamic html
 
+    let search = $('#search'); //search bar
+    let searchString;       //what's in the search bar
+
     $(document).ready(function () {
         $.ajax({
             url: 'php/htmlGeneration.php',
@@ -267,7 +276,28 @@ Duis autem vel eum iriure dolor in hendrerit in vulputate velit esse molestie co
             modal.find('.modal-title').text(product);
             modal.find('.modal-body').empty();
             modal.find('.modal-body').append(htmlString);
-        })
+        });
+
+        //reloads articles according to what is entered in the searchbar
+        search.keyup(function () {
+            searchString = search.val();
+
+            $.ajax({
+                url: 'php/htmlGeneration.php',
+                type: 'GET',
+                data: {searchRequest: searchString},
+                success: function (data) {
+                    search.css("background-color", "yellow");
+                    htmlString = data;
+                    let article = $('#article');
+                    article.empty();
+                    article.append(htmlString);
+                },
+                error: function () {
+                    search.css("background-color", "red");
+                }
+            });
+        });
     });
 
     // update slider value on slider change

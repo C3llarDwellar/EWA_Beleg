@@ -79,26 +79,70 @@ if (isset($_GET['trigger'])){
     echo $htmlString;
 }
 
-if (isset($_GET['stockTrigger'])){
+if (isset($_GET['searchRequest'])){
+    // search input as lowercase for case insensitivity
+    $search =strtolower($_GET['searchRequest']);
+    $htmlString="";
+    $cards = [];
+
+    $j = 0;     // amount of returned cards
+
+    for ($i = 0; $i < sizeof($id); $i++) {
+        // convert all to lowercase for case insensitivity
+        $lowerTitle = strtolower($title[$i]);
+        $lowerAuthor = strtolower($author[$i]);
+
+        if (strpos($lowerTitle, $search) !== false || strpos($lowerAuthor, $search) !== false) {
+
+            $cardString = "
+            <div class='col-3'>
+                <div class='card w-100 h-100' data-id='" . $id[$i] . "' data-product='" . $title[$i] . "'>
+                    <div class='card-body'>
+                        <h5 class='card-title'>" . $title[$i] . "</h5>
+                        <h6 class='card-subtitle'>" . $author[$i] . "</h6>
+                    </div>
+                </div>
+            </div>";
+
+            array_push($cards, $cardString);
+        }
+    }
+
+    for ($i = 0; $i < sizeof($cards); $i++) {
+        if ($i % 4 == 0 || $i == 0) {
+            $htmlString .= "<div class='row'>";
+        }
+
+        $htmlString .= $cards[$i];
+
+        if ($i % 4 == 3 || $i == sizeof($cards) - 1) {
+            $htmlString .= "</div>";
+        }
+    }
+
+    echo $htmlString;
+}
+
+if (isset($_GET['stockTrigger'])) {
     $htmlString = "";
 
-    for ($i = 0; $i < sizeof($id); $i++){
+    for ($i = 0; $i < sizeof($id); $i++) {
         $htmlString .= "<div class='row'>";
-        if ($stock[$i] < 10){
+        if ($stock[$i] < 10) {
             $htmlString .= "<div class='card w-100 border-danger'>
                 <div class='card-body'>
                     <div class='row'>
                         <div class='col-9'>
-                            <span>". $title[$i] ."</span>
+                            <span>" . $title[$i] . "</span>
                         </div>
                         <div class='col-1'>
-                            <span>". $stock[$i] ."</span>
+                            <span>" . $stock[$i] . "</span>
                         </div>
                         <div class='col-1'>
-                            <span>". $price[$i] ."€</span>                        
+                            <span>" . $price[$i] . "€</span>                        
                         </div>
                         <div class='col-1'>
-                            <span>". $stock[$i] * $price[$i] ."€</span>                        
+                            <span>" . $stock[$i] * $price[$i] . "€</span>                        
                         </div>
                     </div>
                 </div>
@@ -108,25 +152,23 @@ if (isset($_GET['stockTrigger'])){
                 <div class='card-body'>
                     <div class='row'>
                         <div class='col-9'>
-                            <span>". $title[$i] ."</span>
+                            <span>" . $title[$i] . "</span>
                         </div>
                         <div class='col-1'>
-                            <span>". $stock[$i] ."</span>
+                            <span>" . $stock[$i] . "</span>
                         </div>
                         <div class='col-1'>
-                            <span>". $price[$i] ."€</span>                        
+                            <span>" . $price[$i] . "€</span>                        
                         </div>
                         <div class='col-1'>
-                            <span>". $stock[$i] * $price[$i] ."€</span>                        
+                            <span>" . $stock[$i] * $price[$i] . "€</span>                        
                         </div>
                     </div>
                 </div>
             </div>";
         }
-
         $htmlString .= "</div>";
     }
-
     echo $htmlString;
 }
 ?>
