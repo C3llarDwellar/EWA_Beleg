@@ -25,6 +25,17 @@
 <body>
 
 
+<?php
+
+if ($_SERVER['PHP_AUTH_USER'] !== 'admin' && $_SERVER['PHP_AUTH_PW'] !== '123456') {
+    header('WWW-Authenticate: Basic realm="Admin Page"');
+    header('HTTP/1.0 401 Unauthorized');
+    echo "There was an error";
+    exit;
+}
+?>
+
+
 <!--navbar header-->
 <nav class="navbar navbar-expand-md navbar-light bg-light fixed-top">
     <div class="container">
@@ -121,7 +132,7 @@
 
     $(document).ready(function () {
         $.ajax({
-            url: 'http://ivm108.informatik.htw-dresden.de/ewa/G12/php/htmlGeneration.php',
+            url: '../php/htmlGeneration.php',
             type: 'GET',
             data: {stockTrigger:""},
             success: function (data) {

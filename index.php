@@ -60,7 +60,7 @@
 
                 <!-- administration -->
                 <li class="nav-item">
-                    <a class="nav-link" href="daten/stockCatalogue.html">Administration</a>
+                    <a class="nav-link" href="daten/stockCatalogue.php">Administration</a>
                 </li>
             </ul>
 

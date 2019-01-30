@@ -78,4 +78,55 @@ if (isset($_GET['trigger'])){
 
     echo $htmlString;
 }
+
+if (isset($_GET['stockTrigger'])){
+    $htmlString = "";
+
+    for ($i = 0; $i < sizeof($id); $i++){
+        $htmlString .= "<div class='row'>";
+        if ($stock[$i] < 10){
+            $htmlString .= "<div class='card w-100 border-danger'>
+                <div class='card-body'>
+                    <div class='row'>
+                        <div class='col-9'>
+                            <span>". $title[$i] ."</span>
+                        </div>
+                        <div class='col-1'>
+                            <span>". $stock[$i] ."</span>
+                        </div>
+                        <div class='col-1'>
+                            <span>". $price[$i] ."€</span>                        
+                        </div>
+                        <div class='col-1'>
+                            <span>". $stock[$i] * $price[$i] ."€</span>                        
+                        </div>
+                    </div>
+                </div>
+            </div>";
+        } else {
+            $htmlString .= "<div class='card w-100'>
+                <div class='card-body'>
+                    <div class='row'>
+                        <div class='col-9'>
+                            <span>". $title[$i] ."</span>
+                        </div>
+                        <div class='col-1'>
+                            <span>". $stock[$i] ."</span>
+                        </div>
+                        <div class='col-1'>
+                            <span>". $price[$i] ."€</span>                        
+                        </div>
+                        <div class='col-1'>
+                            <span>". $stock[$i] * $price[$i] ."€</span>                        
+                        </div>
+                    </div>
+                </div>
+            </div>";
+        }
+
+        $htmlString .= "</div>";
+    }
+
+    echo $htmlString;
+}
 ?>
