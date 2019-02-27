@@ -13,13 +13,18 @@ $password = "ru37w";
 $dbname = "g12";
 */
 
-function selectAllBooks ($host, $username, $password, $dbname){
-    $query = "SELECT * FROM buecher";
-
+function connectToDatabase($host, $username, $password, $dbname) {
     $mysqli = new mysqli($host, $username, $password, $dbname);
     if ($mysqli->connect_errno) {
         die("Database Connection failed: " . $mysqli->connect_errno);
     }
+    return $mysqli;
+}
+
+function selectAllBooks ($host, $username, $password, $dbname){
+    $query = "SELECT * FROM buecher";
+
+    $mysqli = connectToDatabase($host, $username, $password, $dbname);
     $statement = $mysqli->prepare($query);
     $statement->execute();
 
@@ -29,10 +34,7 @@ function selectAllBooks ($host, $username, $password, $dbname){
 }
 
 function findBooks ($host, $username, $password, $dbname, $searchString) {
-    $mysqli = new mysqli($host, $username, $password, $dbname);
-    if ($mysqli->connect_errno) {
-        die("Database Connection failed: " . $mysqli->connect_errno);
-    }
+    $mysqli = connectToDatabase($host, $username, $password, $dbname);
 
     $query = "SELECT * FROM buecher WHERE Produkttitel LIKE CONCAT('%',?,'%') OR Autorname LIKE CONCAT('%',?,'%')";
     $statement = $mysqli->prepare($query);
@@ -44,10 +46,7 @@ function findBooks ($host, $username, $password, $dbname, $searchString) {
 }
 
 function findBooksByTitle ($host, $username, $password, $dbname, $titleSearch) {
-    $mysqli = new mysqli($host, $username, $password, $dbname);
-    if ($mysqli->connect_errno) {
-        die("Database Connection failed: " . $mysqli->connect_errno);
-    }
+    $mysqli = connectToDatabase($host, $username, $password, $dbname);
 
     $query = "SELECT * FROM buecher  WHERE Produkttitel LIKE CONCAT('%',?,'%')";
     $statement = $mysqli->prepare($query);
