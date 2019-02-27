@@ -34,7 +34,7 @@ function findBooks ($host, $username, $password, $dbname, $searchString) {
         die("Database Connection failed: " . $mysqli->connect_errno);
     }
 
-    $query = "SELECT * FROM buecher WHERE Produkttitel LIKE CONCAT('%',?,'?') OR Autorname LIKE CONCAT('%',?,'%')";
+    $query = "SELECT * FROM buecher WHERE Produkttitel LIKE CONCAT('%',?,'%') OR Autorname LIKE CONCAT('%',?,'%')";
     $statement = $mysqli->prepare($query);
     $statement->bind_param('ss', $searchString, $searchString);
     $statement->execute();
