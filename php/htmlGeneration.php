@@ -8,8 +8,10 @@
 
 include "databaseOperations.php";
 
+// TODO: Properties file
 $result = selectAllBooks("localhost", "G12", "ru37w", "g12");
 
+/*
 $id = [];
 $isbn = [];
 $title = [];
@@ -31,29 +33,71 @@ while ($row = $result->fetch_assoc()) {
     array_push($summary, $row["Kurzinhalt"]);
     array_push($weight, $row["Gewicht"]);
 }
+*/
+
+
+if (isset($_GET['action']) && !empty($_GET['action'])) {
+    $action = $_GET['action'];
+    switch ($action) {
+        case 'search' : searchRequest();break;
+        case 'modal' : generateModal();break;
+        case 'init' : generateCards();break;
+        case 'stockInit' : stockInitialize();break;
+    }
+}
 
 //generates html if the modal is called
-if (isset($_GET['articleId'])) {
-    $articleId = $_GET['articleId'];
-    $htmlString = "";
+function generateModal() {
+    if (isset($_GET['articleId'])) {
 
-    for ($i = 0; $i < sizeof($id); $i++) {
-        if ($id[$i] == $articleId) {
-            $htmlString .= "<span>ISBN: " . $isbn[$i] . "</span></br>
+
+        $articleId = $_GET['articleId'];
+        $htmlString = "";
+
+        $book = getBookById("localhost", "G12", "ru37w", "g12", $articleId);
+
+        while ($row = $book->fetch_assoc()) {
+            array_push($id, $row["ProduktID"]);
+            array_push($isbn, $row["Produktcode"]);
+            array_push($title, $row["Produkttitel"]);
+            array_push($author, $row["Autorname"]);
+            array_push($publisher, $row["Verlagsname"]);
+            array_push($price, $row["PreisNetto"]);
+            array_push($stock, $row["Lagerbestand"]);
+            array_push($summary, $row["Kurzinhalt"]);
+            array_push($weight, $row["Gewicht"]);
+        }
+
+        for ($i = 0; $i < sizeof($id); $i++) {
+            if ($id[$i] == $articleId) {
+                $htmlString .= "<span>ISBN: " . $isbn[$i] . "</span></br>
                             <span>Author: " . $author[$i] . "</span></br>
                             <span>Publisher: " . $publisher[$i] . "</span></br>
                             <span>Price: " . $price[$i] . "€</span></br>
                             <span>Stock: " . $stock[$i] . "</span></br>
                             <span>Summary: " . $summary[$i] . "</span></br>
                             <span>Weight: " . $weight[$i] . "g</span>";
+            }
         }
-    }
 
-    echo $htmlString;
+        echo $htmlString;
+    }
 }
 
 //generated html when the document is ready
-if (isset($_GET['trigger'])){
+function generateCards() {
+    $allBooks = selectAllBooks("localhost", "G12", "ru37w", "g12");
+
+    $id = [];
+    $title = [];
+    $author = [];
+
+    while ($row = $allBooks->fetch_assoc()) {
+        array_push($id, $row["ProduktID"]);
+        array_push($title, $row["Produkttitel"]);
+        array_push($author, $row["Autorname"]);
+    }
+
     $htmlString = "";
 
     for ($i = 0; $i < sizeof($id); $i++) {
@@ -79,48 +123,35 @@ if (isset($_GET['trigger'])){
     echo $htmlString;
 }
 
-if (isset($_GET['searchRequest'])){
-    // search input as lowercase for case insensitivity
-    $search =strtolower($_GET['searchRequest']);
+function searchRequest() {
+    if (isset($_GET['searchRequest'])){
+        // search input as lowercase for case insensitivity
+        $search =strtolower($_GET['searchRequest']);
 
-    $searchResult = findBooks("localhost", "G12", "ru37w", "g12", $search);
+        $searchResult = findBooks("localhost", "G12", "ru37w", "g12", $search);
 
-    $sid = [];
-    $sisbn = [];
-    $stitle = [];
-    $sauthor = [];
-    $spublisher = [];
-    $sprice = [];
-    $sstock = [];
-    $ssummary = [];
-    $sweight = [];
+        $id = [];
+        $title = [];
+        $author = [];
 
-    while ($row = $searchResult->fetch_assoc()) {
-        array_push($sid, $row["ProduktID"]);
-        array_push($sisbn, $row["Produktcode"]);
-        array_push($stitle, $row["Produkttitel"]);
-        array_push($sauthor, $row["Autorname"]);
-        array_push($spublisher, $row["Verlagsname"]);
-        array_push($sprice, $row["PreisNetto"]);
-        array_push($sstock, $row["Lagerbestand"]);
-        array_push($ssummary, $row["Kurzinhalt"]);
-        array_push($sweight, $row["Gewicht"]);
-    }
+        while ($row = $searchResult->fetch_assoc()) {
+            array_push($id, $row["ProduktID"]);
+            array_push($title, $row["Produkttitel"]);
+            array_push($author, $row["Autorname"]);
+        }
 
-    if ($search !== "") {
-        $htmlString="";
-        $cards = [];
+        if ($search !== "") {
+            $htmlString="";
+            $cards = [];
 
-        $j = 0;     // amount of returned cards
+            for ($i = 0; $i < sizeof($id); $i++) {
+                // convert all to lowercase for case insensitivity
+                $lowerTitle = strtolower($title[$i]);
+                $lowerAuthor = strtolower($author[$i]);
 
-        for ($i = 0; $i < sizeof($id); $i++) {
-            // convert all to lowercase for case insensitivity
-            $lowerTitle = strtolower($title[$i]);
-            $lowerAuthor = strtolower($author[$i]);
+                if (strpos($lowerTitle, $search) !== false || strpos($lowerAuthor, $search) !== false) {
 
-            if (strpos($lowerTitle, $search) !== false || strpos($lowerAuthor, $search) !== false) {
-
-                $cardString = "
+                    $cardString = "
             <div class='col-3'>
                 <div class='card w-100 h-100' data-id='" . $id[$i] . "' data-product='" . $title[$i] . "'>
                     <div class='card-body'>
@@ -130,32 +161,32 @@ if (isset($_GET['searchRequest'])){
                 </div>
             </div>";
 
-                array_push($cards, $cardString);
-            }
-        }
-
-        for ($i = 0; $i < sizeof($cards); $i++) {
-            if ($i % 4 == 0 || $i == 0) {
-                $htmlString .= "<div class='row'>";
+                    array_push($cards, $cardString);
+                }
             }
 
-            $htmlString .= $cards[$i];
+            for ($i = 0; $i < sizeof($cards); $i++) {
+                if ($i % 4 == 0 || $i == 0) {
+                    $htmlString .= "<div class='row'>";
+                }
 
-            if ($i % 4 == 3 || $i == sizeof($cards) - 1) {
-                $htmlString .= "</div>";
-            }
-        }
+                $htmlString .= $cards[$i];
 
-        echo $htmlString;
-    } else {
-        $htmlString = "";
-
-        for ($i = 0; $i < sizeof($id); $i++) {
-            if ($i % 4 == 0 || $i == 0) {
-                $htmlString .= "<div class='row'>";
+                if ($i % 4 == 3 || $i == sizeof($cards) - 1) {
+                    $htmlString .= "</div>";
+                }
             }
 
-            $htmlString .= "
+            echo $htmlString;
+        } else {
+            $htmlString = "";
+
+            for ($i = 0; $i < sizeof($id); $i++) {
+                if ($i % 4 == 0 || $i == 0) {
+                    $htmlString .= "<div class='row'>";
+                }
+
+                $htmlString .= "
             <div class='col-3 d-flex align-items-stretch'>
                 <div class='card w-100 h-100' data-id='" . $id[$i] . "' data-product='" . $title[$i] . "'>
                     <div class='card-body'>
@@ -165,17 +196,33 @@ if (isset($_GET['searchRequest'])){
                 </div>
             </div>";
 
-            if ($i % 4 == 3 || $i == sizeof($id) - 1) {
-                $htmlString .= "</div>";
+                if ($i % 4 == 3 || $i == sizeof($id) - 1) {
+                    $htmlString .= "</div>";
+                }
             }
-        }
 
-        echo $htmlString;
+            echo $htmlString;
+        }
     }
 }
 
-if (isset($_GET['stockTrigger'])) {
+
+function stockInitialize() {
     $htmlString = "";
+
+    $allBooks = selectAllBooks("localhost", "G12", "ru37w", "g12");
+
+    $id = [];
+    $title = [];
+    $price = [];
+    $stock = [];
+
+    while ($row = $allBooks->fetch_assoc()) {
+        array_push($id, $row["ProduktID"]);
+        array_push($title, $row["Produkttitel"]);
+        array_push($price, $row["PreisNetto"]);
+        array_push($stock, $row["Lagerbestand"]);
+    }
 
     for ($i = 0; $i < sizeof($id); $i++) {
         $htmlString .= "<div class='row'>";
