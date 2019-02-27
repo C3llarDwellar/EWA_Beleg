@@ -8,7 +8,7 @@
 
 include "databaseOperations.php";
 
-$result = databaseConnect("localhost", "G12", "ru37w", "g12");
+$result = selectAllBooks("localhost", "G12", "ru37w", "g12");
 
 $id = [];
 $isbn = [];
@@ -82,6 +82,30 @@ if (isset($_GET['trigger'])){
 if (isset($_GET['searchRequest'])){
     // search input as lowercase for case insensitivity
     $search =strtolower($_GET['searchRequest']);
+
+    $searchResult = findBooks("localhost", "G12", "ru37w", "g12", $search);
+
+    $sid = [];
+    $sisbn = [];
+    $stitle = [];
+    $sauthor = [];
+    $spublisher = [];
+    $sprice = [];
+    $sstock = [];
+    $ssummary = [];
+    $sweight = [];
+
+    while ($row = $searchResult->fetch_assoc()) {
+        array_push($sid, $row["ProduktID"]);
+        array_push($sisbn, $row["Produktcode"]);
+        array_push($stitle, $row["Produkttitel"]);
+        array_push($sauthor, $row["Autorname"]);
+        array_push($spublisher, $row["Verlagsname"]);
+        array_push($sprice, $row["PreisNetto"]);
+        array_push($sstock, $row["Lagerbestand"]);
+        array_push($ssummary, $row["Kurzinhalt"]);
+        array_push($sweight, $row["Gewicht"]);
+    }
 
     if ($search !== "") {
         $htmlString="";
