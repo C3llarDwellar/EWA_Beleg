@@ -9,9 +9,11 @@
 include "databaseOperations.php";
 
 // TODO: Properties file
+$config = parse_ini_file("EWA_Beleg/resources/configuration/app.ini");
+/*
 $result = selectAllBooks("localhost", "G12", "ru37w", "g12");
 
-/*
+
 $id = [];
 $isbn = [];
 $title = [];
@@ -49,23 +51,23 @@ if (isset($_GET['action']) && !empty($_GET['action'])) {
 //generates html if the modal is called
 function generateModal() {
     if (isset($_GET['articleId'])) {
-
+        global $config;
 
         $articleId = $_GET['articleId'];
         $htmlString = "";
 
-        $book = getBookById("localhost", "G12", "ru37w", "g12", $articleId);
+        $book = getBookById($config['host'], $config['username'], $config['password'], $config['dbname'], $articleId);
 
         while ($row = $book->fetch_assoc()) {
-            array_push($id, $row["ProduktID"]);
-            array_push($isbn, $row["Produktcode"]);
-            array_push($title, $row["Produkttitel"]);
-            array_push($author, $row["Autorname"]);
-            array_push($publisher, $row["Verlagsname"]);
-            array_push($price, $row["PreisNetto"]);
-            array_push($stock, $row["Lagerbestand"]);
-            array_push($summary, $row["Kurzinhalt"]);
-            array_push($weight, $row["Gewicht"]);
+            array_push($id, $row[$config['id']]);
+            array_push($isbn, $row[$config['isbn']]);
+            array_push($title, $row[$config['title']]);
+            array_push($author, $row[$config['author']]);
+            array_push($publisher, $row[$config['publisher']]);
+            array_push($price, $row[$config['price']]);
+            array_push($stock, $row[$config['stock']]);
+            array_push($summary, $row[$config['summary']]);
+            array_push($weight, $row[$config['weight']]);
         }
 
         for ($i = 0; $i < sizeof($id); $i++) {
@@ -86,16 +88,17 @@ function generateModal() {
 
 //generated html when the document is ready
 function generateCards() {
-    $allBooks = selectAllBooks("localhost", "G12", "ru37w", "g12");
+    global $config;
+    $allBooks = selectAllBooks($config['host'], $config['username'], $config['password'], $config['dbname']);
 
     $id = [];
     $title = [];
     $author = [];
 
     while ($row = $allBooks->fetch_assoc()) {
-        array_push($id, $row["ProduktID"]);
-        array_push($title, $row["Produkttitel"]);
-        array_push($author, $row["Autorname"]);
+        array_push($id, $row[$config['id']]);
+        array_push($title, $row[$config['title']]);
+        array_push($author, $row[$config['author']]);
     }
 
     $htmlString = "";
@@ -128,16 +131,17 @@ function searchRequest() {
         // search input as lowercase for case insensitivity
         $search =strtolower($_GET['searchRequest']);
 
-        $searchResult = findBooks("localhost", "G12", "ru37w", "g12", $search);
+        global $config;
+        $searchResult = findBooks($config['host'], $config['username'], $config['password'], $config['dbname'], $search);
 
         $id = [];
         $title = [];
         $author = [];
 
         while ($row = $searchResult->fetch_assoc()) {
-            array_push($id, $row["ProduktID"]);
-            array_push($title, $row["Produkttitel"]);
-            array_push($author, $row["Autorname"]);
+            array_push($id, $row[$config['id']]);
+            array_push($title, $row[$config['title']]);
+            array_push($author, $row[$config['author']]);
         }
 
         if ($search !== "") {
@@ -206,11 +210,11 @@ function searchRequest() {
     }
 }
 
-
 function stockInitialize() {
     $htmlString = "";
 
-    $allBooks = selectAllBooks("localhost", "G12", "ru37w", "g12");
+    global $config;
+    $allBooks = selectAllBooks($config['host'], $config['username'], $config['password'], $config['dbname']);
 
     $id = [];
     $title = [];
@@ -218,10 +222,10 @@ function stockInitialize() {
     $stock = [];
 
     while ($row = $allBooks->fetch_assoc()) {
-        array_push($id, $row["ProduktID"]);
-        array_push($title, $row["Produkttitel"]);
-        array_push($price, $row["PreisNetto"]);
-        array_push($stock, $row["Lagerbestand"]);
+        array_push($id, $row[$config['id']]);
+        array_push($title, $row[$config['title']]);
+        array_push($price, $row[$config['price']]);
+        array_push($stock, $row[$config['stock']]);
     }
 
     for ($i = 0; $i < sizeof($id); $i++) {
