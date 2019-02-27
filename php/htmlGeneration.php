@@ -127,7 +127,7 @@ function generateCards() {
 }
 
 function searchRequest() {
-    if (isset($_GET['searchRequest'])){
+    if (isset($_GET['searchRequest']) && $_GET['searchRequest'] != ""){
         // search input as lowercase for case insensitivity
         $search =strtolower($_GET['searchRequest']);
 
@@ -144,18 +144,17 @@ function searchRequest() {
             array_push($author, $row[$config['author']]);
         }
 
-        if ($search !== "") {
-            $htmlString="";
-            $cards = [];
+        $htmlString="";
+        $cards = [];
 
-            for ($i = 0; $i < sizeof($id); $i++) {
-                // convert all to lowercase for case insensitivity
-                $lowerTitle = strtolower($title[$i]);
-                $lowerAuthor = strtolower($author[$i]);
+        for ($i = 0; $i < sizeof($id); $i++) {
+            // convert all to lowercase for case insensitivity
+            $lowerTitle = strtolower($title[$i]);
+            $lowerAuthor = strtolower($author[$i]);
 
-                if (strpos($lowerTitle, $search) !== false || strpos($lowerAuthor, $search) !== false) {
+            if (strpos($lowerTitle, $search) !== false || strpos($lowerAuthor, $search) !== false) {
 
-                    $cardString = "
+                $cardString = "
             <div class='col-3'>
                 <div class='card w-100 h-100' data-id='" . $id[$i] . "' data-product='" . $title[$i] . "'>
                     <div class='card-body'>
@@ -165,48 +164,25 @@ function searchRequest() {
                 </div>
             </div>";
 
-                    array_push($cards, $cardString);
-                }
+                array_push($cards, $cardString);
             }
-
-            for ($i = 0; $i < sizeof($cards); $i++) {
-                if ($i % 4 == 0 || $i == 0) {
-                    $htmlString .= "<div class='row'>";
-                }
-
-                $htmlString .= $cards[$i];
-
-                if ($i % 4 == 3 || $i == sizeof($cards) - 1) {
-                    $htmlString .= "</div>";
-                }
-            }
-
-            echo $htmlString;
-        } else {
-            $htmlString = "";
-
-            for ($i = 0; $i < sizeof($id); $i++) {
-                if ($i % 4 == 0 || $i == 0) {
-                    $htmlString .= "<div class='row'>";
-                }
-
-                $htmlString .= "
-            <div class='col-3 d-flex align-items-stretch'>
-                <div class='card w-100 h-100' data-id='" . $id[$i] . "' data-product='" . $title[$i] . "'>
-                    <div class='card-body'>
-                        <h5 class='card-title'>" . $title[$i] . "</h5>
-                        <h6 class='card-subtitle'>" . $author[$i] . "</h6>
-                    </div>
-                </div>
-            </div>";
-
-                if ($i % 4 == 3 || $i == sizeof($id) - 1) {
-                    $htmlString .= "</div>";
-                }
-            }
-
-            echo $htmlString;
         }
+
+        for ($i = 0; $i < sizeof($cards); $i++) {
+            if ($i % 4 == 0 || $i == 0) {
+                $htmlString .= "<div class='row'>";
+            }
+
+            $htmlString .= $cards[$i];
+
+            if ($i % 4 == 3 || $i == sizeof($cards) - 1) {
+                $htmlString .= "</div>";
+            }
+        }
+
+        echo $htmlString;
+    } else {
+        generateCards();
     }
 }
 
