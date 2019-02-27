@@ -57,4 +57,15 @@ function findBooksByTitle ($host, $username, $password, $dbname, $titleSearch) {
     $result = $statement->get_result();
     return $result;
 }
+
+function getBookById ($host, $username, $password, $dbname, $id) {
+    $mysqli = connectToDatabase($host, $username, $password, $dbname);
+
+    $query = "SELECT * FROM buecher WHERE ProduktID = ?";
+    $statement = $mysqli->prepare($query);
+    $statement->bind_param('i', $id);
+    $statement->execute();
+
+    return $statement->get_result();
+}
 ?>
