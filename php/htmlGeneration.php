@@ -9,7 +9,7 @@
 include "databaseOperations.php";
 
 // TODO: Properties file
-$config = parse_ini_file("EWA_Beleg/resources/configuration/app.ini");
+$config = parse_ini_file("../resources/configuration/app.ini");
 /*
 $result = selectAllBooks("localhost", "G12", "ru37w", "g12");
 
@@ -57,6 +57,16 @@ function generateModal() {
         $htmlString = "";
 
         $book = getBookById($config['host'], $config['username'], $config['password'], $config['dbname'], $articleId);
+
+        $id = [];
+        $isbn = [];
+        $title = [];
+        $author = [];
+        $publisher = [];
+        $price = [];
+        $stock = [];
+        $summary = [];
+        $weight = [];
 
         while ($row = $book->fetch_assoc()) {
             array_push($id, $row[$config['id']]);
