@@ -71,4 +71,37 @@ function getBookById ($id) {
 
     return $statement->get_result();
 }
+
+// Users
+function saveUser($name, $pw, $gender, $adress) {
+    $mysqli = connectToDatabase();
+
+    $query = "INSERT INTO user (Username, Userpwmd5, UserAnrede, UserAdresse) VALUES (?, ?, ?, ?)";
+    $statement = $mysqli->prepare($query);
+    $statement->bind_param('ssss', $name, $pw, $gender, $adress);
+    $statement->execute();
+
+    return $statement->get_result();
+}
+
+function isUserTaken($name) {
+    $mysqli = connectToDatabase();
+
+    $query = "SELECT * FROM user WHERE Username LIKE ?";
+    $statement = $mysqli->prepare($query);
+    $statement->bind_param('s', $name);
+    $statement->execute();
+
+    $result = $statement->get_result();
+    if (!$result) {
+        die("There was a problem with the Query");
+    } else {
+        if (mysqli_num_rows($result) > 0) {
+            return true;
+        }
+        else {
+            return false;
+        }
+    }
+}
 ?>
