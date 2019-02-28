@@ -24,9 +24,6 @@ if (isUserTaken($username)) {
     die("Username is taken");
 }
 
-// hash password
-$passHash = md5($password);
-
 // save User
-saveUser($username, $passHash, $gender, $address);
+saveUser($username, $password, $gender, $address);
 echo ("Registration successful!");

@@ -21,7 +21,7 @@
             crossorigin="anonymous"></script>
 
     <!-- encryption -->
-
+    <script src="resources/scripts/js/md5.min.js"></script>
 
     <title>Sign Up</title>
 </head>
@@ -130,10 +130,12 @@
             let pass = $('#signUpFormPassword').val();
             let address = $('#signUpFormAddress').val();
 
+            let passHash = md5(pass);
+
             $.ajax({
                 url: 'php/registration.php',
                 type: 'POST',
-                data: {gender: gender, user: name, password: pass, address: address},
+                data: {gender: gender, user: name, password: passHash, address: address},
                 success: function (data) {
                     let resultDiv = $('#signUpResult');
                     resultDiv.empty();
