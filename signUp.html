@@ -85,7 +85,7 @@
             <p>To complete registration, please fill out this short form.</p>
 
             <!-- actual form for signing up -->
-            <form id="signUpForm" action="php/registration.php" method="post">
+            <form id="signUpForm" action="javascript:sendSignUp()">
                 <!-- Gender -->
                 <div class="form-group">
                     <label for="signUpFormGender">Gender</label>
@@ -121,6 +121,27 @@
             </form>
         </div>
     </div>
+    <div class="row" id="signUpResult"></div>
+
+    <script>
+        function sendSignUp() {
+            let gender = $('#signUpFormGender').val();
+            let name = $('#signUpFormUser').val();
+            let pass = $('#signUpFormPassword').val();
+            let address = $('#signUpFormAddress').val();
+
+            $.ajax({
+                url: 'php/registration.php',
+                type: 'POST',
+                data: {gender: gender, user: name, password: pass, address: address},
+                success: function (data) {
+                    let resultDiv = $('#signUpResult');
+                    resultDiv.empty();
+                    resultDiv.append(data);
+                }
+            })
+        }
+    </script>
 </main>
 </body>
 </html>
