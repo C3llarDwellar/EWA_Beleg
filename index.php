@@ -74,9 +74,7 @@
             <ul class="navbar-nav ml-auto">
                 <!-- login button -->
                 <li class="nav-item">
-                    <button type="button" class="btn btn-light" id="btnSignUp" data-toggle="modal"
-                            data-target="#signUpModal">Sign Up
-                    </button>
+                    <a class="nav-link active" href="signUp.html">Sign Up</a>
                 </li>
             </ul>
         </div>
