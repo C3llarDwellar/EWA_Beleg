@@ -56,7 +56,7 @@ function generateModal() {
         $articleId = $_GET['articleId'];
         $htmlString = "";
 
-        $book = getBookById($config['host'], $config['username'], $config['password'], $config['dbname'], $articleId);
+        $book = getBookById($articleId);
 
         $id = [];
         $isbn = [];
@@ -99,7 +99,7 @@ function generateModal() {
 //generated html when the document is ready
 function generateCards() {
     global $config;
-    $allBooks = selectAllBooks($config['host'], $config['username'], $config['password'], $config['dbname']);
+    $allBooks = selectAllBooks();
 
     $id = [];
     $title = [];
@@ -142,7 +142,7 @@ function searchRequest() {
         $search =strtolower($_GET['searchRequest']);
 
         global $config;
-        $searchResult = findBooks($config['host'], $config['username'], $config['password'], $config['dbname'], $search);
+        $searchResult = findBooks($search);
 
         $id = [];
         $title = [];
@@ -200,7 +200,7 @@ function stockInitialize() {
     $htmlString = "";
 
     global $config;
-    $allBooks = selectAllBooks($config['host'], $config['username'], $config['password'], $config['dbname']);
+    $allBooks = selectAllBooks();
 
     $id = [];
     $title = [];
