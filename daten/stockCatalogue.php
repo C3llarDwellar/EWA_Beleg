@@ -134,7 +134,7 @@ if ($_SERVER['PHP_AUTH_USER'] !== 'admin' && $_SERVER['PHP_AUTH_PW'] !== '123456
         $.ajax({
             url: '../php/htmlGeneration.php',
             type: 'GET',
-            data: {stockTrigger:""},
+            data: {action: 'stockInit'},
             success: function (data) {
                 htmlString = data;
                 main.append(htmlString);

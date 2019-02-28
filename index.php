@@ -246,7 +246,7 @@ Duis autem vel eum iriure dolor in hendrerit in vulputate velit esse molestie co
         $.ajax({
             url: 'php/htmlGeneration.php',
             type: 'GET',
-            data: {trigger:""},
+            data: {action: 'init'},
             success: function (data) {
                 htmlString = data;
                 $('#article').append(htmlString)
@@ -263,7 +263,7 @@ Duis autem vel eum iriure dolor in hendrerit in vulputate velit esse molestie co
             $.ajax({
                 url: 'php/htmlGeneration.php',
                 type: 'GET',
-                data: {articleId: id},
+                data: {articleId: id, action: 'modal'},
                 success: function (data) {
                     htmlString = data;
                     $('#productDetailModal').modal('show');
@@ -285,7 +285,7 @@ Duis autem vel eum iriure dolor in hendrerit in vulputate velit esse molestie co
             $.ajax({
                 url: 'php/htmlGeneration.php',
                 type: 'GET',
-                data: {searchRequest: searchString},
+                data: {searchRequest: searchString, action: 'search'},
                 success: function (data) {
                     htmlString = data;
                     let article = $('#article');
