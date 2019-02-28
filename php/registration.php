@@ -20,7 +20,7 @@ if (isset($_POST['address'])) {
 }
 
 // Is username taken?
-if (isUserTaken($username)) {
+if (doesUserExist($username)) {
     die("Username is taken");
 }
 

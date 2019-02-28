@@ -20,6 +20,10 @@
             integrity="sha384-ChfqqxuZUCnJSK3+MXmPNIyE6ZbWh2IMqE241rYiqJxyMiZ6OW/JmZQ5stwEULTy"
             crossorigin="anonymous"></script>
 
+    <!-- login -->
+    <script src="../javascript/logIn.js"></script>
+    <script src="../resources/scripts/js/md5.min.js"></script>
+
     <title>Stock Catalogue</title>
 </head>
 <body>
@@ -75,9 +79,21 @@ if ($_SERVER['PHP_AUTH_USER'] !== 'admin' && $_SERVER['PHP_AUTH_PW'] !== '123456
             <ul class="navbar-nav ml-auto">
                 <!-- login button -->
                 <li class="nav-item">
-                    <button type="button" class="btn btn-light" id="btnSignUp" data-toggle="modal"
-                            data-target="#signUpModal">Sign Up
+                    <!-- login button -->
+                <li class="nav-item">
+                    <button type="button" class="btn btn-light" id="btnLogIn" data-toggle="modal" data-target="#logInModal">
+                        Log in
                     </button>
+                </li>
+
+                <!-- registration button -->
+                <li class="nav-item">
+                    <a href="../signUp.html">
+                        <button type="button" class="btn btn-light" id="btnSignUp">
+                            Sign Up
+                        </button>
+                    </a>
+                </li>
                 </li>
             </ul>
         </div>

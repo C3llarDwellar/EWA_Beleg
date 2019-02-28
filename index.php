@@ -20,6 +20,12 @@
             integrity="sha384-ChfqqxuZUCnJSK3+MXmPNIyE6ZbWh2IMqE241rYiqJxyMiZ6OW/JmZQ5stwEULTy"
             crossorigin="anonymous"></script>
 
+    <!-- login -->
+    <script src="javascript/logIn.js"></script>
+
+    <!-- encryption -->
+    <script src="resources/scripts/js/md5.min.js"></script>
+
     <title>Bookstore of Group G12</title>
 </head>
 <body>
@@ -74,7 +80,18 @@
             <ul class="navbar-nav ml-auto">
                 <!-- login button -->
                 <li class="nav-item">
-                    <a class="nav-link active" href="signUp.html">Sign Up</a>
+                    <button type="button" class="btn btn-light" id="btnLogIn" data-toggle="modal" data-target="#logInModal">
+                        Log in
+                    </button>
+                </li>
+
+                <!-- registration button -->
+                <li class="nav-item">
+                    <a href="signUp.html">
+                        <button type="button" class="btn btn-light" id="btnSignUp">
+                            Sign Up
+                        </button>
+                    </a>
                 </li>
             </ul>
         </div>
@@ -82,67 +99,35 @@
 </nav>
 
 
-<!--dialog form for sign up-->
-<div class="modal fade" role="dialog" id="signUpModal">
+<!--dialog form for logging in-->
+<div class="modal fade" role="dialog" id="logInModal">
     <div class="modal-dialog modal-dialog-centered" role="document">
         <div class="modal-content">
             <div class="modal-header">
-                <h5 class="modal-title">Sign Up</h5>
+                <h5 class="modal-title">Log In</h5>
                 <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                     <span aria-hidden="true">&times;</span>
                 </button>
             </div>
             <div class="modal-body">
 
-                <!-- actual form for signing up -->
-                <form id="signUpForm">
-                    <!-- first name -->
+                <!-- actual form for logging in -->
+                <form id="logInForm" action="javascript:logIn();">
+                    <!-- username -->
                     <div class="form-group">
-                        <label for="signUpFormFName">First Name</label>
-                        <input type="text" class="form-control" id="signUpFormFName" minlength="2" required>
+                        <label for="logInFormUser">Username</label>
+                        <input type="text" name="user" class="form-control" id="logInFormUser" minlength="2" required>
                     </div>
-                    <!-- last name -->
+                    <!-- password -->
                     <div class="form-group">
-                        <label for="signUpFormLName">Last Name</label>
-                        <input type="text" class="form-control" id="signUpFormLName" minlength="2" required>
+                        <label for="logInFormPassword">Password</label>
+                        <input type="password" name="password" class="form-control" id="logInFormPassword" minlength="2" required>
                     </div>
-                    <!-- e-mail -->
-                    <!-- the html5 email check seems to be simply setting the input type to "email" -->
-                    <div class="form-group">
-                        <label for="signUpFormEMail">Email address</label>
-                        <input type="email" class="form-control" id="signUpFormEMail" placeholder="name@example.com"
-                               required>
-                    </div>
-                    <!-- customer url -->
-                    <div class="form-group">
-                        <label for="signUpFormURL">Customer URL</label>
-                        <input type="url" class="form-control" id="signUpFormURL" placeholder="http:\\www.example.com"
-                               required>
-                    </div>
-                    <!-- age -->
-                    <div class="form-group">
-                        <label for="signUpFormAge">Age</label>
-                        <input type="number" class="form-control" id="signUpFormAge" min="5" max="100" required>
-                    </div>
-                    <!-- range for recommended suggestions -->
-                    <div class="form-group">
-                        <label for="signUpFormRange"><span id="signUpFormRangeValue"></span>% of recommended products
-                            will be similar to your interests</label>
-                        <input type="range" class="form-control-range" id="signUpFormRange" min="0" max="100" step="10">
-                    </div>
-                    <!-- text area with spell checking -->
-                    <!-- this is implemented differently from browser to browser -->
-                    <!-- firefox and opera offer spell checking on right-click -->
-                    <!-- edge, safari and chrome do it as you type -->
-                    <div class="form-group">
-                        <label for="signUpFormTextarea">Customer Request</label>
-                        <textarea class="form-control" id="signUpFormTextarea" rows="5" spellcheck="true"></textarea>
-                    </div>
+
+                    <input type="submit" value="Log In">
                 </form>
-            </div>
-            <div class="modal-footer">
-                <button type="button" class="btn btn-secondary" data-dismiss="modal">Cancel</button>
-                <button type="submit" class="btn btn-primary" id="signUpFormSubmit">Submit</button>
+
+                <div class="row" id="logInFormResult"></div>
             </div>
         </div>
     </div>
@@ -251,8 +236,6 @@ Duis autem vel eum iriure dolor in hendrerit in vulputate velit esse molestie co
             }
         });
 
-        $('#signUpFormRangeValue').text($('#signUpFormRange').val());
-
         //on-click function that handles every click on any of the generated cards
         main.on('click', 'div.card', function () {
             id = $(this).data('id');
@@ -292,11 +275,6 @@ Duis autem vel eum iriure dolor in hendrerit in vulputate velit esse molestie co
                 }
             });
         });
-    });
-
-    // update slider value on slider change
-    $('#signUpFormRange').change(function () {
-        $('#signUpFormRangeValue').text($('#signUpFormRange').val());
     });
 </script>
 

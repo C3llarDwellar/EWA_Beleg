@@ -84,7 +84,7 @@ function saveUser($name, $pw, $gender, $adress) {
     return $statement->get_result();
 }
 
-function isUserTaken($name) {
+function doesUserExist($name) {
     $mysqli = connectToDatabase();
 
     $query = "SELECT * FROM user WHERE Username LIKE ?";
@@ -103,5 +103,22 @@ function isUserTaken($name) {
             return false;
         }
     }
+}
+
+function isPasswordCorrect($name, $pass) {
+    $mysqli = connectToDatabase();
+
+    $query = "SELECT Userpwmd5 FROM user WHERE Username LIKE ?";
+    $statement = $mysqli->prepare($query);
+    $statement->bind_param('s', $name);
+    $statement->execute();
+    $result = $statement->get_result();
+
+    while ($row = $result->fetch_assoc()) {
+        if ($row['Userpwmd5'] == $pass) {
+            return true;
+        }
+    }
+    return false;
 }
 ?>
