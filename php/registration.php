@@ -29,3 +29,4 @@ $passHash = md5($password);
 
 // save User
 saveUser($username, $passHash, $gender, $address);
+echo ("Registration successful!");
