@@ -72,13 +72,20 @@
 
                 <li class="nav-item">
                     <form>
-                        <input id="search" type="text" name="search" placeholder="Search..">
+                        <input id="search" type="text" class="form-control" name="search" placeholder="Search..">
                     </form>
                 </li>
             </ul>
 
             <!-- right elements -->
             <ul class="navbar-nav ml-auto">
+                <!-- cart -->
+                <li class="nav-item">
+                    <!-- TODO: Cart Modal -->
+                    <button type="button" class="btn btn-light" id="cartButton" data-toggle="modal" data-target="#cartModal">
+                    </button>
+                </li>
+
                 <!-- login button -->
                 <li class="nav-item">
                     <button type="button" class="btn btn-light" id="btnLogIn" data-toggle="modal" data-target="#logInModal">
@@ -114,7 +121,7 @@
 
                 <!-- TODO: Log out -->
                 <!-- actual form for logging in -->
-                <form id="logInForm" action="javascript:logIn();">
+                <form id="logInForm">
                     <!-- username -->
                     <div class="form-group">
                         <label for="logInFormUser">Username</label>
@@ -126,7 +133,7 @@
                         <input type="password" name="password" class="form-control" id="logInFormPassword" minlength="2" required>
                     </div>
 
-                    <input type="submit" value="Log In">
+                    <input type="button" class="btn btn-light" id="logInButton" value="Log In">
                 </form>
 
                 <div class="row" id="logInFormResult"></div>
@@ -215,6 +222,10 @@
     let addToCartButton = $('#btnAddToCart');
     let removeFromCartButton = $('#btnRemoveFromCart');
 
+    let loginButton = $('#logInButton');
+
+    let sessionId = sessionStorage['uid'];
+
     $(document).ready(function () {
         $.ajax({
             url: 'php/htmlGeneration.php',
@@ -238,16 +249,23 @@
                 success: function (data) {
                     htmlString = data;
                     $('#productDetailModal').modal('show');
-                    checkCartAmount(sessionStorage['uid'], id);
+                    checkCartAmountForProduct(sessionStorage['uid'], id);
                 }
             });
         });
+        
+        checkCartAmount(sessionId);
 
         $('#productDetailModal').on('show.bs.modal', function () {
             let modal = $(this);
             modal.find('.modal-title').text(product);
             modal.find('.modal-body').empty();
             modal.find('.modal-body').append(htmlString);
+        });
+
+        loginButton.on('click', function () {
+            logIn();
+            sessionId = sessionStorage['uid'];
         });
 
         //reloads articles according to what is entered in the searchbar
@@ -268,11 +286,14 @@
         });
 
         addToCartButton.on('click', function () {
-            addToCart(sessionStorage['uid'], id);
+            addToCart(sessionId, id);
+            checkCartAmount(sessionId);
         });
 
         removeFromCartButton.on('click', function () {
-            removeFromCart(sessionStorage['uid'], id);
+            let sessionId = sessionStorage['uid'];
+            removeFromCart(sessionId, id);
+            checkCartAmount(sessionId);
         })
     });
 </script>

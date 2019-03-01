@@ -2,17 +2,20 @@
 
 session_start();
 
-if (isset($_POST['uid']) && isset($_POST['productId'])) {
+if (isset($_POST['uid'])) {
     $sessionId = $_POST['uid'];
-    $productId = $_POST['productId'];
 
     if ($_SESSION['uid'] == $sessionId) {
-        if (!isset($_SESSION['cart'][$productId])) {
-            $_SESSION['cart'][$productId] = 0;
+        if (!isset($_SESSION['cart'])) {
             die("0");
         } else {
-            die("".$_SESSION['cart'][$productId]);
-            //die("this");
+            $cart = $_SESSION['cart'];
+            $cartSize = 0;
+
+            foreach ($cart AS $productId => $amount) {
+                $cartSize = $cartSize + $amount;
+            }
+            die("".$cartSize);
         }
-    } else die("Wrong session id");
-} else die("parameters not passed.");
+    } else die("0");
+} else die("0");
