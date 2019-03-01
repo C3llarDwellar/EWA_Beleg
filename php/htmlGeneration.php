@@ -45,6 +45,8 @@ if (isset($_GET['action']) && !empty($_GET['action'])) {
         case 'modal' : generateModal();break;
         case 'init' : generateCards();break;
         case 'stockInit' : stockInitialize();break;
+        case 'logIn' : generateLogInButton();break;
+        case 'logOut' : generateLogOutButton();break;
     }
 }
 
@@ -258,5 +260,13 @@ function stockInitialize() {
         $htmlString .= "</div>";
     }
     echo $htmlString;
+}
+
+function generateLogInButton() {
+    echo "<button type=\"button\" class=\"btn btn-light\" id=\"btnLogIn\" data-toggle=\"modal\" data-target=\"#logInModal\">Log In</button>";
+}
+
+function generateLogOutButton() {
+    echo "<button type=\"button\" class=\"btn btn-light\" id=\"btnLogOut\" onclick='logOut()'>Log Out</button>";
 }
 ?>

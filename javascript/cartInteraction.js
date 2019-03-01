@@ -67,7 +67,11 @@ function checkCartAmountForProduct(sessionId, productId) {
         },
         success: function (data) {
             amountLabel.empty();
-            amountLabel.append(data + " in cart");
+            if (data === "parameters not passed.") {
+                amountLabel.append("Please log in first.")
+            } else {
+                amountLabel.append(data + " in cart");
+            }
         }
     });
 }

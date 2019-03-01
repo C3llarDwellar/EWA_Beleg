@@ -87,10 +87,7 @@
                 </li>
 
                 <!-- login button -->
-                <li class="nav-item">
-                    <button type="button" class="btn btn-light" id="btnLogIn" data-toggle="modal" data-target="#logInModal">
-                        Log in
-                    </button>
+                <li class="nav-item" id="logInLi">
                 </li>
 
                 <!-- registration button -->
@@ -121,7 +118,7 @@
 
                 <!-- TODO: Log out -->
                 <!-- actual form for logging in -->
-                <form id="logInForm">
+                <form id="logInForm" method="post">
                     <!-- username -->
                     <div class="form-group">
                         <label for="logInFormUser">Username</label>
@@ -222,9 +219,8 @@
     let addToCartButton = $('#btnAddToCart');
     let removeFromCartButton = $('#btnRemoveFromCart');
 
-    let loginButton = $('#logInButton');
-
-    let sessionId = sessionStorage['uid'];
+    let logInLi = $('#logInLi');
+    let loginSubmit = $('#logInButton');
 
     $(document).ready(function () {
         $.ajax({
@@ -236,6 +232,8 @@
                 $('#article').append(htmlString)
             }
         });
+
+        createLoginButton();
 
         //on-click function that handles every click on any of the generated cards
         main.on('click', 'div.card', function () {
@@ -253,8 +251,8 @@
                 }
             });
         });
-        
-        checkCartAmount(sessionId);
+
+        checkCartAmount(sessionStorage['uid']);
 
         $('#productDetailModal').on('show.bs.modal', function () {
             let modal = $(this);
@@ -263,9 +261,8 @@
             modal.find('.modal-body').append(htmlString);
         });
 
-        loginButton.on('click', function () {
+        loginSubmit.on('click', function () {
             logIn();
-            sessionId = sessionStorage['uid'];
         });
 
         //reloads articles according to what is entered in the searchbar
@@ -286,6 +283,7 @@
         });
 
         addToCartButton.on('click', function () {
+            let sessionId = sessionStorage['uid'];
             addToCart(sessionId, id);
             checkCartAmount(sessionId);
         });

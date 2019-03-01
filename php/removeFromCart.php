@@ -15,4 +15,4 @@ if (isset($_POST['uid']) && isset($_POST['productId'])) {
         }
         die("removed");
     } else die("Wrong session id");
-} else die("parameters not passed");
+} else die("log in first");
