@@ -113,20 +113,6 @@ if ($_SERVER['PHP_AUTH_USER'] !== 'admin' && $_SERVER['PHP_AUTH_PW'] !== '123456
             <button type="button" class="btn btn-outline-secondary btn-block" id="btnLayout">Change Layout</button>
         </div>
     </div>
-    <div class="row">
-        <div class="col-9">
-            <span>Title</span>
-        </div>
-        <div class="col-1">
-            <span>Stock</span>
-        </div>
-        <div class="col-1">
-            <span>Price</span>
-        </div>
-        <div class="col-1">
-            <span>Total</span>
-        </div>
-    </div>
 </div>
 
 <main class="container bottom-container">
