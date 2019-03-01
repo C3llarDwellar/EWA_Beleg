@@ -14,8 +14,8 @@ if (doesUserExist($username)) {
         $_SESSION['cart'] = [];
         die($uid);
     } else {
-        die(false);
+        die("password incorrect");
     }
 } else {
-    die(false);
+    die("unknown user");
 }
