@@ -21,7 +21,7 @@
             crossorigin="anonymous"></script>
 
     <!-- login -->
-    <script src="javascript/logIn.js"></script>
+    <script src="../javascript/logIn.js"></script>
     <script src="resources/scripts/js/md5.min.js"></script>
 
     <title>Stock Catalogue</title>
@@ -58,7 +58,7 @@ if ($_SERVER['PHP_AUTH_USER'] !== 'admin' && $_SERVER['PHP_AUTH_PW'] !== '123456
             <ul class="navbar-nav mr-auto">
                 <!-- home-button -->
                 <li class="nav-item">
-                    <a class="nav-link active" href="index.php">Home <span class="sr-only">(current)</span></a>
+                    <a class="nav-link active" href="../index.php">Home <span class="sr-only">(current)</span></a>
                 </li>
 
                 <!-- dropdown-menu -->

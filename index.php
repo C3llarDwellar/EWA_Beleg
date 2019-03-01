@@ -66,7 +66,7 @@
 
                 <!-- administration -->
                 <li class="nav-item">
-                    <a class="nav-link" href="stockCatalogue.php">Administration</a>
+                    <a class="nav-link" href="sites/stockCatalogue.php">Administration</a>
                 </li>
 
                 <li class="nav-item">
@@ -87,7 +87,7 @@
 
                 <!-- registration button -->
                 <li class="nav-item">
-                    <a href="signUp.html">
+                    <a href="sites/signUp.html">
                         <button type="button" class="btn btn-light" id="btnSignUp">
                             Sign Up
                         </button>
@@ -183,7 +183,7 @@
     <div class="container text-muted text-center">
         <div class="row">
             <div class="col-4">
-                <a href="contact.html">Imprint</a>
+                <a href="sites/contact.html">Imprint</a>
             </div>
             <div class="col-4">
                 <span>E-Mail:
