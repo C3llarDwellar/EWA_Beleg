@@ -163,7 +163,7 @@
 
 
 <!--main-->
-<main class="container">
+<main class="container top-container bottom-container">
     <div class="row">
         <div class="col-9 text-justify" id="article">
             <h3>Main content section</h3>

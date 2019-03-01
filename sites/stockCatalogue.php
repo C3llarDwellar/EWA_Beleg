@@ -81,7 +81,8 @@ if ($_SERVER['PHP_AUTH_USER'] !== 'admin' && $_SERVER['PHP_AUTH_PW'] !== '123456
                 <li class="nav-item">
                     <!-- login button -->
                 <li class="nav-item">
-                    <button type="button" class="btn btn-light" id="btnLogIn" data-toggle="modal" data-target="#logInModal">
+                    <button type="button" class="btn btn-light" id="btnLogIn" data-toggle="modal"
+                            data-target="#logInModal">
                         Log in
                     </button>
                 </li>
@@ -100,9 +101,18 @@ if ($_SERVER['PHP_AUTH_USER'] !== 'admin' && $_SERVER['PHP_AUTH_PW'] !== '123456
     </div>
 </nav>
 
-
-<main class="container">
-    <h3>Current Stock</h3>
+<div class="container top-container">
+    <div class="row">
+        <div class="col-8">
+            <h3>Current Stock</h3>
+        </div>
+        <div class="col-2">
+            <button type="button" class="btn btn-outline-secondary btn-block" id="btnDetails">Toggle Details</button>
+        </div>
+        <div class="col-2">
+            <button type="button" class="btn btn-outline-secondary btn-block" id="btnLayout">Change Layout</button>
+        </div>
+    </div>
     <div class="row">
         <div class="col-9">
             <span>Title</span>
@@ -117,6 +127,10 @@ if ($_SERVER['PHP_AUTH_USER'] !== 'admin' && $_SERVER['PHP_AUTH_PW'] !== '123456
             <span>Total</span>
         </div>
     </div>
+</div>
+
+<main class="container bottom-container">
+
 </main>
 
 
@@ -145,16 +159,70 @@ if ($_SERVER['PHP_AUTH_USER'] !== 'admin' && $_SERVER['PHP_AUTH_PW'] !== '123456
 <script>
     let htmlString = "";
     let main = $('main');
+    let buttonLayout = $('#btnLayout');
+    let buttonInfo = $('#btnDetails');
+    let infoToggle = 0;
+    let layout = "rows";
 
     $(document).ready(function () {
         $.ajax({
-            url: 'php/htmlGeneration.php',
+            url: '../php/htmlGeneration.php',
             type: 'GET',
-            data: {action: 'stockInit'},
+            data: {
+                action: 'stockInit',
+                parameter1: infoToggle,
+                parameter2: layout
+            },
             success: function (data) {
                 htmlString = data;
                 main.append(htmlString);
             }
+        });
+
+        buttonInfo.click(function () {
+            if (infoToggle === 0) {
+                infoToggle = 1;
+            } else {
+                infoToggle = 0;
+            }
+
+            $.ajax({
+                url: '../php/htmlGeneration.php',
+                type: 'GET',
+                data: {
+                    action: 'stockInit',
+                    parameter1: infoToggle,
+                    parameter2: layout
+                },
+                success: function (data) {
+                    htmlString = data;
+                    main.empty();
+                    main.append(htmlString);
+                }
+            });
+        });
+
+        buttonLayout.click(function () {
+            if (layout === "rows"){
+                layout = "grid";
+            } else {
+                layout = "rows";
+            }
+
+            $.ajax({
+                url: '../php/htmlGeneration.php',
+                type: 'GET',
+                data: {
+                    action: 'stockInit',
+                    parameter1: infoToggle,
+                    parameter2: layout
+                },
+                success: function (data) {
+                    htmlString = data;
+                    main.empty();
+                    main.append(htmlString);
+                }
+            });
         });
     });
 </script>

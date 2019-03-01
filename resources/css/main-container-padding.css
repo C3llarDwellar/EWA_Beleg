@@ -1,6 +1,9 @@
-main {
+.top-container {
     margin-top: 60px;
-    margin-bottom: 60px;
+}
+
+.bottom-container {
+    margin-bottom: 30px;
 }
 
 .form-control {
