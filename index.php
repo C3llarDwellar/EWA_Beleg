@@ -22,9 +22,10 @@
 
     <!-- login -->
     <script src="javascript/logIn.js"></script>
-
-    <!-- encryption -->
     <script src="resources/scripts/js/md5.min.js"></script>
+
+    <!-- cart -->
+    <script src="javascript/cartInteraction.js"></script>
 
     <title>Bookstore of Group G12</title>
 </head>
@@ -153,7 +154,8 @@
             </div>
             <div class="modal-footer">
                 <span>
-                    <button type="button" class="btn btn-light" id="btnAddToCart" onclick="addToCart()">+</button>
+                    <label id="cartAmount"></label>
+                    <button type="button" class="btn btn-light" id="btnAddToCart">+</button>
                     <button type="button" class="btn btn-light" id="btnRemoveFromCart">-</button>
                 </span>
             </div>
@@ -210,6 +212,8 @@
     let search = $('#search'); //search bar
     let searchString;       //what's in the search bar
 
+    let addToCartButton = $('#btnAddToCart');
+
     $(document).ready(function () {
         $.ajax({
             url: 'php/htmlGeneration.php',
@@ -260,15 +264,11 @@
                 }
             });
         });
+
+        addToCartButton.on('click', function () {
+            addToCart(sessionStorage['uid'], id);
+        });
     });
-
-    function addToCart() {
-        if (sessionStorage.getItem('loggedIn') === 'true') {
-
-        } else {
-            alert("Please log in first");
-        }
-    }
 </script>
 
 </body>

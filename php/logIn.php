@@ -11,6 +11,7 @@ if (doesUserExist($username)) {
         $uid = md5(uniqid(rand()));
         session_start();
         $_SESSION['uid'] = $uid;
+        $_SESSION['cart'] = [];
         die($uid);
     } else {
         die(false);
