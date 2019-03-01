@@ -9,7 +9,7 @@
     <!-- bootstrap integration -->
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/css/bootstrap.min.css"
           integrity="sha384-MCw98/SFnGE8fJT3GXwEOngsV7Zt27NXFoaoApmYm81iuXoPkFOJwJ8ERdknLPMO" crossorigin="anonymous">
-    <link rel="stylesheet" href="resources/scripts/css/main-container-padding.css">
+    <link rel="stylesheet" href="resources/css/main-container-padding.css">
     <!--jquery integration-->
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
 
@@ -24,7 +24,7 @@
     <script src="javascript/logIn.js"></script>
 
     <!-- encryption -->
-    <script src="resources/scripts/js/md5.min.js"></script>
+    <script src="javascript/md5.js"></script>
 
     <title>Bookstore of Group G12</title>
 </head>
