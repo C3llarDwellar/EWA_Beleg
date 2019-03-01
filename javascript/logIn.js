@@ -12,6 +12,7 @@ function logIn() {
             resultDiv.empty();
 
             if (data) {
+                sessionStorage.setItem('loggedIn', 'true');
                 resultDiv.append("Success");
             } else {
                 resultDiv.append("Username or Password incorrect.")

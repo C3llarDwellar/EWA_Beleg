@@ -111,6 +111,7 @@
             </div>
             <div class="modal-body">
 
+                <!-- TODO: Log out -->
                 <!-- actual form for logging in -->
                 <form id="logInForm" action="javascript:logIn();">
                     <!-- username -->
@@ -149,6 +150,12 @@
             <!--body will be filled when the modal ist called-->
             <div class="modal-body">
                 <span>Data will be here</span>
+            </div>
+            <div class="modal-footer">
+                <span>
+                    <button type="button" class="btn btn-light" id="btnAddToCart" onclick="addToCart()">+</button>
+                    <button type="button" class="btn btn-light" id="btnRemoveFromCart">-</button>
+                </span>
             </div>
         </div>
     </div>
@@ -254,6 +261,14 @@
             });
         });
     });
+
+    function addToCart() {
+        if (sessionStorage.getItem('loggedIn') === 'true') {
+
+        } else {
+            alert("Please log in first");
+        }
+    }
 </script>
 
 </body>
