@@ -144,6 +144,7 @@
                 <div class="form-group">
                     <label for="signUpFormPassword">Password</label>
                     <input type="password" name="password" class="form-control" id="signUpFormPassword" minlength="2" required>
+                    <span class="error-tooltip" id="signUpFormPasswordToolTip"></span>
                 </div>
 
                 <div class="form-group">
@@ -167,12 +168,31 @@
     <script>
         $(document).ready(function () {
             $('#signUpFormRangeValue').text($('#signUpFormRange').val());
+
+            $('#signUpFormPassword').keyup(function () {
+                let password = $('#signUpFormPassword').val();
+                let tooltip = $('#signUpFormPasswordToolTip');
+
+                if (password.length !== 0){
+                    if(!hasNumber(password) || password.length < 5){
+                        tooltip.text('The password needs to be at least 5 characters long and must contain at least 1 number.');
+                    } else {
+                        tooltip.empty();
+                    }
+                } else {
+                    tooltip.empty();
+                }
+            })
         });
 
         // update slider value on slider change
         $('#signUpFormRange').change(function () {
             $('#signUpFormRangeValue').text($('#signUpFormRange').val());
         });
+
+        function hasNumber(string) {
+            return /\d/.test(string);
+        }
 
         function sendSignUp() {
             let gender = $('#signUpFormGender').val();

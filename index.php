@@ -262,13 +262,6 @@
         });
     });
 
-    function addToCart() {
-        if (sessionStorage.getItem('loggedIn') === 'true') {
-
-        } else {
-            alert("Please log in first");
-        }
-    }
 </script>
 
 </body>
