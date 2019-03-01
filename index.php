@@ -213,6 +213,7 @@
     let searchString;       //what's in the search bar
 
     let addToCartButton = $('#btnAddToCart');
+    let removeFromCartButton = $('#btnRemoveFromCart');
 
     $(document).ready(function () {
         $.ajax({
@@ -237,6 +238,7 @@
                 success: function (data) {
                     htmlString = data;
                     $('#productDetailModal').modal('show');
+                    checkCartAmount(sessionStorage['uid'], id);
                 }
             });
         });
@@ -268,6 +270,10 @@
         addToCartButton.on('click', function () {
             addToCart(sessionStorage['uid'], id);
         });
+
+        removeFromCartButton.on('click', function () {
+            removeFromCart(sessionStorage['uid'], id);
+        })
     });
 </script>
 
