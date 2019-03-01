@@ -9,7 +9,7 @@
     <!-- bootstrap integration -->
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/css/bootstrap.min.css"
           integrity="sha384-MCw98/SFnGE8fJT3GXwEOngsV7Zt27NXFoaoApmYm81iuXoPkFOJwJ8ERdknLPMO" crossorigin="anonymous">
-    <link rel="stylesheet" href="main-container-padding.css">
+    <link rel="stylesheet" href="resources/scripts/css/main-container-padding.css">
     <!--jquery integration-->
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
 
@@ -21,8 +21,8 @@
             crossorigin="anonymous"></script>
 
     <!-- login -->
-    <script src="../javascript/logIn.js"></script>
-    <script src="../resources/scripts/js/md5.min.js"></script>
+    <script src="javascript/logIn.js"></script>
+    <script src="resources/scripts/js/md5.min.js"></script>
 
     <title>Stock Catalogue</title>
 </head>
@@ -58,7 +58,7 @@ if ($_SERVER['PHP_AUTH_USER'] !== 'admin' && $_SERVER['PHP_AUTH_PW'] !== '123456
             <ul class="navbar-nav mr-auto">
                 <!-- home-button -->
                 <li class="nav-item">
-                    <a class="nav-link active" href="../index.php">Home <span class="sr-only">(current)</span></a>
+                    <a class="nav-link active" href="index.php">Home <span class="sr-only">(current)</span></a>
                 </li>
 
                 <!-- dropdown-menu -->
@@ -88,7 +88,7 @@ if ($_SERVER['PHP_AUTH_USER'] !== 'admin' && $_SERVER['PHP_AUTH_PW'] !== '123456
 
                 <!-- registration button -->
                 <li class="nav-item">
-                    <a href="../signUp.html">
+                    <a href="signUp.html">
                         <button type="button" class="btn btn-light" id="btnSignUp">
                             Sign Up
                         </button>
@@ -148,7 +148,7 @@ if ($_SERVER['PHP_AUTH_USER'] !== 'admin' && $_SERVER['PHP_AUTH_PW'] !== '123456
 
     $(document).ready(function () {
         $.ajax({
-            url: '../php/htmlGeneration.php',
+            url: 'php/htmlGeneration.php',
             type: 'GET',
             data: {action: 'stockInit'},
             success: function (data) {

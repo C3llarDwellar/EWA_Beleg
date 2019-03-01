@@ -9,7 +9,7 @@
     <!-- bootstrap integration -->
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/css/bootstrap.min.css"
           integrity="sha384-MCw98/SFnGE8fJT3GXwEOngsV7Zt27NXFoaoApmYm81iuXoPkFOJwJ8ERdknLPMO" crossorigin="anonymous">
-    <link rel="stylesheet" href="daten/main-container-padding.css">
+    <link rel="stylesheet" href="resources/scripts/css/main-container-padding.css">
     <!--jquery integration-->
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
 
@@ -66,7 +66,7 @@
 
                 <!-- administration -->
                 <li class="nav-item">
-                    <a class="nav-link" href="daten/stockCatalogue.php">Administration</a>
+                    <a class="nav-link" href="stockCatalogue.php">Administration</a>
                 </li>
 
                 <li class="nav-item">
@@ -198,7 +198,7 @@ Duis autem vel eum iriure dolor in hendrerit in vulputate velit esse molestie co
     <div class="container text-muted text-center">
         <div class="row">
             <div class="col-4">
-                <a href="daten/contact.html">Imprint</a>
+                <a href="contact.html">Imprint</a>
             </div>
             <div class="col-4">
                 <span>E-Mail:

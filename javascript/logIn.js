@@ -9,9 +9,13 @@ function logIn() {
         type: 'POST',
         data: {user: username, password: passHash},
         success: function (data) {
-
             resultDiv.empty();
-            resultDiv.append(data);
+
+            if (data) {
+                resultDiv.append("Success");
+            } else {
+                resultDiv.append("Username or Password incorrect.")
+            }
         }
     })
 }
