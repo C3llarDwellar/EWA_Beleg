@@ -8,8 +8,10 @@ $password = $_POST['password'] or die("Password required");
 
 if (doesUserExist($username)) {
     if (isPasswordCorrect($username, $password)) {
-        echo "Success";
+        die("Success");
     } else {
-        echo "Failure";
+        die("Password incorrect");
     }
+} else {
+    die("Username not found");
 }
