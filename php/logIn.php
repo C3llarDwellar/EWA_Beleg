@@ -8,7 +8,10 @@ $password = $_POST['password'] or die("Password required");
 
 if (doesUserExist($username)) {
     if (isPasswordCorrect($username, $password)) {
-        die(true);
+        $uid = md5(uniqid(rand()));
+        session_start();
+        $_SESSION['uid'] = $uid;
+        die($uid);
     } else {
         die(false);
     }
