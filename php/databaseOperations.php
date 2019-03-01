@@ -12,19 +12,22 @@ $username = "G12";
 $password = "ru37w";
 $dbname = "g12";
 */
+$config = parse_ini_file('../resources/configuration/app.ini');
 
-function connectToDatabase($host, $username, $password, $dbname) {
-    $mysqli = new mysqli($host, $username, $password, $dbname);
+function connectToDatabase() {
+    global $config;
+    $mysqli = new mysqli($config['host'], $config['username'], $config['password'], $config['dbname']);
     if ($mysqli->connect_errno) {
         die("Database Connection failed: " . $mysqli->connect_errno);
     }
     return $mysqli;
 }
 
-function selectAllBooks ($host, $username, $password, $dbname){
+// Books
+function selectAllBooks (){
     $query = "SELECT * FROM buecher";
 
-    $mysqli = connectToDatabase($host, $username, $password, $dbname);
+    $mysqli = connectToDatabase();
     $statement = $mysqli->prepare($query);
     $statement->execute();
 
@@ -33,8 +36,8 @@ function selectAllBooks ($host, $username, $password, $dbname){
     return $result;
 }
 
-function findBooks ($host, $username, $password, $dbname, $searchString) {
-    $mysqli = connectToDatabase($host, $username, $password, $dbname);
+function findBooks ($searchString) {
+    $mysqli = connectToDatabase();
 
     $query = "SELECT * FROM buecher WHERE Produkttitel LIKE CONCAT('%',?,'%') OR Autorname LIKE CONCAT('%',?,'%')";
     $statement = $mysqli->prepare($query);
@@ -45,8 +48,8 @@ function findBooks ($host, $username, $password, $dbname, $searchString) {
     return $result;
 }
 
-function findBooksByTitle ($host, $username, $password, $dbname, $titleSearch) {
-    $mysqli = connectToDatabase($host, $username, $password, $dbname);
+function findBooksByTitle ($titleSearch) {
+    $mysqli = connectToDatabase();
 
     $query = "SELECT * FROM buecher  WHERE Produkttitel LIKE CONCAT('%',?,'%')";
     $statement = $mysqli->prepare($query);
@@ -58,8 +61,8 @@ function findBooksByTitle ($host, $username, $password, $dbname, $titleSearch) {
     return $result;
 }
 
-function getBookById ($host, $username, $password, $dbname, $id) {
-    $mysqli = connectToDatabase($host, $username, $password, $dbname);
+function getBookById ($id) {
+    $mysqli = connectToDatabase();
 
     $query = "SELECT * FROM buecher WHERE ProduktID = ?";
     $statement = $mysqli->prepare($query);
@@ -67,5 +70,55 @@ function getBookById ($host, $username, $password, $dbname, $id) {
     $statement->execute();
 
     return $statement->get_result();
+}
+
+// Users
+function saveUser($name, $pw, $gender, $adress) {
+    $mysqli = connectToDatabase();
+
+    $query = "INSERT INTO user (Username, Userpwmd5, UserAnrede, UserAdresse) VALUES (?, ?, ?, ?)";
+    $statement = $mysqli->prepare($query);
+    $statement->bind_param('ssss', $name, $pw, $gender, $adress);
+    $statement->execute();
+
+    return $statement->get_result();
+}
+
+function doesUserExist($name) {
+    $mysqli = connectToDatabase();
+
+    $query = "SELECT * FROM user WHERE Username LIKE ?";
+    $statement = $mysqli->prepare($query);
+    $statement->bind_param('s', $name);
+    $statement->execute();
+
+    $result = $statement->get_result();
+    if (!$result) {
+        die("There was a problem with the Query");
+    } else {
+        if (mysqli_num_rows($result) > 0) {
+            return true;
+        }
+        else {
+            return false;
+        }
+    }
+}
+
+function isPasswordCorrect($name, $pass) {
+    $mysqli = connectToDatabase();
+
+    $query = "SELECT Userpwmd5 FROM user WHERE Username LIKE ?";
+    $statement = $mysqli->prepare($query);
+    $statement->bind_param('s', $name);
+    $statement->execute();
+    $result = $statement->get_result();
+
+    while ($row = $result->fetch_assoc()) {
+        if ($row['Userpwmd5'] == $pass) {
+            return true;
+        }
+    }
+    return false;
 }
 ?>

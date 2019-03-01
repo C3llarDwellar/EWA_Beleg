@@ -9,7 +9,7 @@
     <!-- bootstrap integration -->
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/css/bootstrap.min.css"
           integrity="sha384-MCw98/SFnGE8fJT3GXwEOngsV7Zt27NXFoaoApmYm81iuXoPkFOJwJ8ERdknLPMO" crossorigin="anonymous">
-    <link rel="stylesheet" href="daten/main-container-padding.css">
+    <link rel="stylesheet" href="resources/scripts/css/main-container-padding.css">
     <!--jquery integration-->
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
 
@@ -19,6 +19,12 @@
     <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/js/bootstrap.min.js"
             integrity="sha384-ChfqqxuZUCnJSK3+MXmPNIyE6ZbWh2IMqE241rYiqJxyMiZ6OW/JmZQ5stwEULTy"
             crossorigin="anonymous"></script>
+
+    <!-- login -->
+    <script src="javascript/logIn.js"></script>
+
+    <!-- encryption -->
+    <script src="resources/scripts/js/md5.min.js"></script>
 
     <title>Bookstore of Group G12</title>
 </head>
@@ -60,7 +66,7 @@
 
                 <!-- administration -->
                 <li class="nav-item">
-                    <a class="nav-link" href="daten/stockCatalogue.php">Administration</a>
+                    <a class="nav-link" href="stockCatalogue.php">Administration</a>
                 </li>
 
                 <li class="nav-item">
@@ -74,9 +80,18 @@
             <ul class="navbar-nav ml-auto">
                 <!-- login button -->
                 <li class="nav-item">
-                    <button type="button" class="btn btn-light" id="btnSignUp" data-toggle="modal"
-                            data-target="#signUpModal">Sign Up
+                    <button type="button" class="btn btn-light" id="btnLogIn" data-toggle="modal" data-target="#logInModal">
+                        Log in
                     </button>
+                </li>
+
+                <!-- registration button -->
+                <li class="nav-item">
+                    <a href="signUp.html">
+                        <button type="button" class="btn btn-light" id="btnSignUp">
+                            Sign Up
+                        </button>
+                    </a>
                 </li>
             </ul>
         </div>
@@ -84,67 +99,36 @@
 </nav>
 
 
-<!--dialog form for sign up-->
-<div class="modal fade" role="dialog" id="signUpModal">
+<!--dialog form for logging in-->
+<div class="modal fade" role="dialog" id="logInModal">
     <div class="modal-dialog modal-dialog-centered" role="document">
         <div class="modal-content">
             <div class="modal-header">
-                <h5 class="modal-title">Sign Up</h5>
+                <h5 class="modal-title">Log In</h5>
                 <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                     <span aria-hidden="true">&times;</span>
                 </button>
             </div>
             <div class="modal-body">
 
-                <!-- actual form for signing up -->
-                <form id="signUpForm">
-                    <!-- first name -->
+                <!-- TODO: Log out -->
+                <!-- actual form for logging in -->
+                <form id="logInForm" action="javascript:logIn();">
+                    <!-- username -->
                     <div class="form-group">
-                        <label for="signUpFormFName">First Name</label>
-                        <input type="text" class="form-control" id="signUpFormFName" minlength="2" required>
+                        <label for="logInFormUser">Username</label>
+                        <input type="text" name="user" class="form-control" id="logInFormUser" minlength="2" required>
                     </div>
-                    <!-- last name -->
+                    <!-- password -->
                     <div class="form-group">
-                        <label for="signUpFormLName">Last Name</label>
-                        <input type="text" class="form-control" id="signUpFormLName" minlength="2" required>
+                        <label for="logInFormPassword">Password</label>
+                        <input type="password" name="password" class="form-control" id="logInFormPassword" minlength="2" required>
                     </div>
-                    <!-- e-mail -->
-                    <!-- the html5 email check seems to be simply setting the input type to "email" -->
-                    <div class="form-group">
-                        <label for="signUpFormEMail">Email address</label>
-                        <input type="email" class="form-control" id="signUpFormEMail" placeholder="name@example.com"
-                               required>
-                    </div>
-                    <!-- customer url -->
-                    <div class="form-group">
-                        <label for="signUpFormURL">Customer URL</label>
-                        <input type="url" class="form-control" id="signUpFormURL" placeholder="http:\\www.example.com"
-                               required>
-                    </div>
-                    <!-- age -->
-                    <div class="form-group">
-                        <label for="signUpFormAge">Age</label>
-                        <input type="number" class="form-control" id="signUpFormAge" min="5" max="100" required>
-                    </div>
-                    <!-- range for recommended suggestions -->
-                    <div class="form-group">
-                        <label for="signUpFormRange"><span id="signUpFormRangeValue"></span>% of recommended products
-                            will be similar to your interests</label>
-                        <input type="range" class="form-control-range" id="signUpFormRange" min="0" max="100" step="10">
-                    </div>
-                    <!-- text area with spell checking -->
-                    <!-- this is implemented differently from browser to browser -->
-                    <!-- firefox and opera offer spell checking on right-click -->
-                    <!-- edge, safari and chrome do it as you type -->
-                    <div class="form-group">
-                        <label for="signUpFormTextarea">Customer Request</label>
-                        <textarea class="form-control" id="signUpFormTextarea" rows="5" spellcheck="true"></textarea>
-                    </div>
+
+                    <input type="submit" value="Log In">
                 </form>
-            </div>
-            <div class="modal-footer">
-                <button type="button" class="btn btn-secondary" data-dismiss="modal">Cancel</button>
-                <button type="submit" class="btn btn-primary" id="signUpFormSubmit">Submit</button>
+
+                <div class="row" id="logInFormResult"></div>
             </div>
         </div>
     </div>
@@ -167,6 +151,12 @@
             <div class="modal-body">
                 <span>Data will be here</span>
             </div>
+            <div class="modal-footer">
+                <span>
+                    <button type="button" class="btn btn-light" id="btnAddToCart" onclick="addToCart()">+</button>
+                    <button type="button" class="btn btn-light" id="btnRemoveFromCart">-</button>
+                </span>
+            </div>
         </div>
     </div>
 </div>
@@ -181,29 +171,7 @@
         <div class="col-3" id="aside">
             <h3 id="news">News section</h3>
             <!--lorem ipsum placeholder-->
-            <span>Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod tempor invidunt ut labore et dolore magna aliquyam erat, sed diam voluptua. At vero eos et accusam et justo duo dolores et ea rebum. Stet clita kasd gubergren, no sea takimata sanctus est Lorem ipsum dolor sit amet. Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod tempor invidunt ut labore et dolore magna aliquyam erat, sed diam voluptua. At vero eos et accusam et justo duo dolores et ea rebum. Stet clita kasd gubergren, no sea takimata sanctus est Lorem ipsum dolor sit amet. Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod tempor invidunt ut labore et dolore magna aliquyam erat, sed diam voluptua. At vero eos et accusam et justo duo dolores et ea rebum. Stet clita kasd gubergren, no sea takimata sanctus est Lorem ipsum dolor sit amet.
-
-Duis autem vel eum iriure dolor in hendrerit in vulputate velit esse molestie consequat, vel illum dolore eu feugiat nulla facilisis at vero eros et accumsan et iusto odio dignissim qui blandit praesent luptatum zzril delenit augue duis dolore te feugait nulla facilisi. Lorem ipsum dolor sit amet, consectetuer adipiscing elit, sed diam nonummy nibh euismod tincidunt ut laoreet dolore magna aliquam erat volutpat.
-
-Ut wisi enim ad minim veniam, quis nostrud exerci tation ullamcorper suscipit lobortis nisl ut aliquip ex ea commodo consequat. Duis autem vel eum iriure dolor in hendrerit in vulputate velit esse molestie consequat, vel illum dolore eu feugiat nulla facilisis at vero eros et accumsan et iusto odio dignissim qui blandit praesent luptatum zzril delenit augue duis dolore te feugait nulla facilisi.
-
-Nam liber tempor cum soluta nobis eleifend option congue nihil imperdiet doming id quod mazim placerat facer possim assum. Lorem ipsum dolor sit amet, consectetuer adipiscing elit, sed diam nonummy nibh euismod tincidunt ut laoreet dolore magna aliquam erat volutpat. Ut wisi enim ad minim veniam, quis nostrud exerci tation ullamcorper suscipit lobortis nisl ut aliquip ex ea commodo consequat.
-
-Duis autem vel eum iriure dolor in hendrerit in vulputate velit esse molestie consequat, vel illum dolore eu feugiat nulla facilisis.
-
-At vero eos et accusam et justo duo dolores et ea rebum. Stet clita kasd gubergren, no sea takimata sanctus est Lorem ipsum dolor sit amet. Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod tempor invidunt ut labore et dolore magna aliquyam erat, sed diam voluptua. At vero eos et accusam et justo duo dolores et ea rebum. Stet clita kasd gubergren, no sea takimata sanctus est Lorem ipsum dolor sit amet. Lorem ipsum dolor sit amet, consetetur sadipscing elitr, At accusam aliquyam diam diam dolore dolores duo eirmod eos erat, et nonumy sed tempor et et invidunt justo labore Stet clita ea et gubergren, kasd magna no rebum. sanctus sea sed takimata ut vero voluptua. est Lorem ipsum dolor sit amet. Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod tempor invidunt ut labore et dolore magna aliquyam erat.
-
-Consetetur sadipscing elitr, sed diam nonumy eirmod tempor invidunt ut labore et dolore magna aliquyam erat, sed diam voluptua. At vero eos et accusam et justo duo dolores et ea rebum. Stet clita kasd gubergren, no sea takimata sanctus est Lorem ipsum dolor sit amet. Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod tempor invidunt ut labore et dolore magna aliquyam erat, sed diam voluptua. At vero eos et accusam et justo duo dolores et ea rebum. Stet clita kasd gubergren, no sea takimata sanctus est Lorem ipsum dolor sit amet. Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod tempor invidunt ut labore et dolore magna aliquyam erat, sed diam voluptua. At vero eos et accusam et justo duo dolores et ea rebum. Stet clita kasd gubergren, no sea takimata sanctus.
-
-Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod tempor invidunt ut labore et dolore magna aliquyam erat, sed diam voluptua. At vero eos et accusam et justo duo dolores et ea rebum. Stet clita kasd gubergren, no sea takimata sanctus est Lorem ipsum dolor sit amet. Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod tempor invidunt ut labore et dolore magna aliquyam erat, sed diam voluptua. At vero eos et accusam et justo duo dolores et ea rebum. Stet clita kasd gubergren, no sea takimata sanctus est Lorem ipsum dolor sit amet. Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod tempor invidunt ut labore et dolore magna aliquyam erat, sed diam voluptua. At vero eos et accusam et justo duo dolores et ea rebum. Stet clita kasd gubergren, no sea takimata sanctus est Lorem ipsum dolor sit amet.
-
-Duis autem vel eum iriure dolor in hendrerit in vulputate velit esse molestie consequat, vel illum dolore eu feugiat nulla facilisis at vero eros et accumsan et iusto odio dignissim qui blandit praesent luptatum zzril delenit augue duis dolore te feugait nulla facilisi. Lorem ipsum dolor sit amet, consectetuer adipiscing elit, sed diam nonummy nibh euismod tincidunt ut laoreet dolore magna aliquam erat volutpat.
-
-Ut wisi enim ad minim veniam, quis nostrud exerci tation ullamcorper suscipit lobortis nisl ut aliquip ex ea commodo consequat. Duis autem vel eum iriure dolor in hendrerit in vulputate velit esse molestie consequat, vel illum dolore eu feugiat nulla facilisis at vero eros et accumsan et iusto odio dignissim qui blandit praesent luptatum zzril delenit augue duis dolore te feugait nulla facilisi.
-
-Nam liber tempor cum soluta nobis eleifend option congue nihil imperdiet doming id quod mazim placerat facer possim assum. Lorem ipsum dolor sit amet, consectetuer adipiscing elit, sed diam nonummy nibh euismod tincidunt ut laoreet dolore magna aliquam erat volutpat. Ut wisi enim ad minim veniam, quis nostrud exerci tation ullamcorper suscipit lobortis nisl ut aliquip ex ea commodo consequat.
-
-Duis autem vel eum iriure dolor in hendrerit in vulputate velit esse molestie consequat, vel illum dolore eu feugiat nulla facilisis.</span>
+            <span>Als nächstes muss es möglich sein, die Bücher zu bestellen.</span>
         </div>
     </div>
 </main>
@@ -215,7 +183,7 @@ Duis autem vel eum iriure dolor in hendrerit in vulputate velit esse molestie co
     <div class="container text-muted text-center">
         <div class="row">
             <div class="col-4">
-                <a href="daten/contact.html">Imprint</a>
+                <a href="contact.html">Imprint</a>
             </div>
             <div class="col-4">
                 <span>E-Mail:
@@ -252,8 +220,6 @@ Duis autem vel eum iriure dolor in hendrerit in vulputate velit esse molestie co
                 $('#article').append(htmlString)
             }
         });
-
-        $('#signUpFormRangeValue').text($('#signUpFormRange').val());
 
         //on-click function that handles every click on any of the generated cards
         main.on('click', 'div.card', function () {
@@ -296,10 +262,13 @@ Duis autem vel eum iriure dolor in hendrerit in vulputate velit esse molestie co
         });
     });
 
-    // update slider value on slider change
-    $('#signUpFormRange').change(function () {
-        $('#signUpFormRangeValue').text($('#signUpFormRange').val());
-    });
+    function addToCart() {
+        if (sessionStorage.getItem('loggedIn') === 'true') {
+
+        } else {
+            alert("Please log in first");
+        }
+    }
 </script>
 
 </body>
