@@ -40,16 +40,30 @@ while ($row = $result->fetch_assoc()) {
 
 if (isset($_GET['action']) && !empty($_GET['action'])) {
     $action = $_GET['action'];
+
     switch ($action) {
-        case 'search' : searchRequest();break;
-        case 'modal' : generateModal();break;
-        case 'init' : generateCards();break;
-        case 'stockInit' : stockInitialize();break;
+        case 'search' :
+            searchRequest();
+            break;
+        case 'modal' :
+            generateModal();
+            break;
+        case 'init' :
+            generateCards();
+            break;
+        case 'stockInit' :
+            if (isset($_GET['parameter1']) && isset($_GET['parameter2'])) {
+                $parameter1 = $_GET['parameter1'];
+                $parameter2 = $_GET['parameter2'];
+                stockInitialize($parameter1, $parameter2);
+            }
+            break;
     }
 }
 
 //generates html if the modal is called
-function generateModal() {
+function generateModal()
+{
     if (isset($_GET['articleId'])) {
         global $config;
 
@@ -97,7 +111,8 @@ function generateModal() {
 }
 
 //generated html when the document is ready
-function generateCards() {
+function generateCards()
+{
     global $config;
     $allBooks = selectAllBooks();
 
@@ -136,10 +151,11 @@ function generateCards() {
     echo $htmlString;
 }
 
-function searchRequest() {
-    if (isset($_GET['searchRequest']) && $_GET['searchRequest'] != ""){
+function searchRequest()
+{
+    if (isset($_GET['searchRequest']) && $_GET['searchRequest'] != "") {
         // search input as lowercase for case insensitivity
-        $search =strtolower($_GET['searchRequest']);
+        $search = strtolower($_GET['searchRequest']);
 
         global $config;
         $searchResult = findBooks($search);
@@ -154,7 +170,7 @@ function searchRequest() {
             array_push($author, $row[$config['author']]);
         }
 
-        $htmlString="";
+        $htmlString = "";
         $cards = [];
 
         for ($i = 0; $i < sizeof($id); $i++) {
@@ -196,67 +212,148 @@ function searchRequest() {
     }
 }
 
-function stockInitialize() {
+function stockInitialize($info, $layout)
+{
     $htmlString = "";
 
     global $config;
     $allBooks = selectAllBooks();
 
     $id = [];
+    $isbn = [];
     $title = [];
     $price = [];
     $stock = [];
 
     while ($row = $allBooks->fetch_assoc()) {
         array_push($id, $row[$config['id']]);
+        array_push($isbn, $row[$config['isbn']]);
         array_push($title, $row[$config['title']]);
         array_push($price, $row[$config['price']]);
         array_push($stock, $row[$config['stock']]);
     }
 
-    for ($i = 0; $i < sizeof($id); $i++) {
-        $htmlString .= "<div class='row'>";
-        if ($stock[$i] < 10) {
-            $htmlString .= "<div class='card w-100 border-danger'>
-                <div class='card-body'>
-                    <div class='row'>
-                        <div class='col-9'>
-                            <span>" . $title[$i] . "</span>
-                        </div>
-                        <div class='col-1'>
-                            <span>" . $stock[$i] . "</span>
-                        </div>
-                        <div class='col-1'>
-                            <span>" . $price[$i] . "€</span>                        
-                        </div>
-                        <div class='col-1'>
-                            <span>" . $stock[$i] * $price[$i] . "€</span>                        
-                        </div>
-                    </div>
-                </div>
-            </div>";
-        } else {
-            $htmlString .= "<div class='card w-100'>
-                <div class='card-body'>
-                    <div class='row'>
-                        <div class='col-9'>
-                            <span>" . $title[$i] . "</span>
-                        </div>
-                        <div class='col-1'>
-                            <span>" . $stock[$i] . "</span>
-                        </div>
-                        <div class='col-1'>
-                            <span>" . $price[$i] . "€</span>                        
-                        </div>
-                        <div class='col-1'>
-                            <span>" . $stock[$i] * $price[$i] . "€</span>                        
+    if ($info == 0 && $layout == "rows") {
+        for ($i = 0; $i < sizeof($id); $i++) {
+            $htmlString .= "<div class='row'>
+                <div class='card w-100 border-danger'>
+                    <div class='card-body'>
+                        <div class='row'>
+                            <div class='col-5'>
+                                <span>" . $title[$i] . "</span>
+                            </div>
+                            <div class='col-4'>
+                                <span>" . $isbn[$i] . "</span>
+                            </div>
+                            <div class='col-1'>
+                                <span>" . $stock[$i] . "</span>
+                            </div>
+                            <div class='col-1'>
+                                <span>" . $price[$i] . "€</span>                        
+                            </div>
+                            <div class='col-1'>
+                                <span>" . $stock[$i] * $price[$i] . "€</span>                        
+                            </div>
                         </div>
                     </div>
                 </div>
             </div>";
         }
-        $htmlString .= "</div>";
+    } elseif ($info == 0&& $layout == "grid") {
+        for ($i = 0; $i < sizeof($id); $i++) {
+            if ($i % 4 == 0 || $i == 0) {
+                $htmlString .= "<div class='row'>";
+            }
+
+            $htmlString .= "<div class='col-3 d-flex align-items-stretch'>
+                <div class='card w-100 h-100 border-danger'>
+                    <div class='card-body'>
+                        <div class='row'>
+                            <span>" . $title[$i] . "</span>
+                        </div>
+                        <div class='row'>
+                            <span>" . $isbn[$i] . "</span>
+                        </div>
+                    </div>
+                    <div class='card-footer'>
+                        <div class='row'>
+                            <div class='col-4'>
+                                <span>" . $stock[$i] . "</span>
+                            </div>
+                            <div class='col-4'>
+                                <span>" . $price[$i] . "€</span>                        
+                            </div>
+                            <div class='col-4'>
+                                <span>" . $stock[$i] * $price[$i] . "€</span>                        
+                            </div>                            
+                        </div>
+                    </div>
+                </div>
+            </div>";
+
+            if ($i % 4 == 3 || $i == sizeof($id) - 1) {
+                $htmlString .= "</div>";
+            }
+        }
+    } elseif ($info == 1 && $layout == "rows") {
+        for ($i = 0; $i < sizeof($id); $i++) {
+            $htmlString .= "<div class='row'>
+                <div class='card w-100 border-danger'>
+                    <div class='card-body'>
+                        <div class='row'>
+                            <div class='col-9'>
+                                <span>" . $title[$i] . "</span>
+                            </div>
+                            <div class='col-1'>
+                                <span>" . $stock[$i] . "</span>
+                            </div>
+                            <div class='col-1'>
+                                <span>" . $price[$i] . "€</span>                        
+                            </div>
+                            <div class='col-1'>
+                                <span>" . $stock[$i] * $price[$i] . "€</span>                        
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>";
+        }
+    } elseif ($info == 1 && $layout == "grid") {
+        for ($i = 0; $i < sizeof($id); $i++) {
+            if ($i % 4 == 0 || $i == 0) {
+                $htmlString .= "<div class='row'>";
+            }
+
+            $htmlString .= "<div class='col-3 d-flex align-items-stretch'>
+                <div class='card w-100 h-100 border-danger'>
+                    <div class='card-body'>
+                        <div class='row'>
+                            <span>" . $title[$i] . "</span>
+                        </div>
+                    </div>
+                    <div class='card-footer'>
+                        <div class='row'>
+                            <div class='col-4'>
+                                <span>" . $stock[$i] . "</span>
+                            </div>
+                            <div class='col-4'>
+                                <span>" . $price[$i] . "€</span>                        
+                            </div>
+                            <div class='col-4'>
+                                <span>" . $stock[$i] * $price[$i] . "€</span>                        
+                            </div>                            
+                        </div>
+                    </div>
+                </div>
+            </div>";
+
+            if ($i % 4 == 3 || $i == sizeof($id) - 1) {
+                $htmlString .= "</div>";
+            }
+        }
     }
+
     echo $htmlString;
 }
+
 ?>

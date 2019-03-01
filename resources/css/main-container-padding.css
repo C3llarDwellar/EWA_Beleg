@@ -1,0 +1,29 @@
+.top-container {
+    margin-top: 60px;
+}
+
+.bottom-container {
+    margin-bottom: 30px;
+}
+
+.form-control {
+    width: 180px;
+    box-sizing: border-box;
+    border: 2px solid #ccc;
+    border-radius: 4px;
+    font-size: 16px;
+    background-color: white;
+    background-position: 10px 10px;
+    background-repeat: no-repeat;
+    padding: 5px 5px 5px 15px;
+    -webkit-transition: width 0.4s ease-in-out;
+    transition: width 0.4s ease-in-out;
+}
+
+.form-control:focus {
+    width: 100%;
+}
+
+.error-tooltip {
+    color: red;
+}

@@ -9,7 +9,7 @@
     <!-- bootstrap integration -->
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/css/bootstrap.min.css"
           integrity="sha384-MCw98/SFnGE8fJT3GXwEOngsV7Zt27NXFoaoApmYm81iuXoPkFOJwJ8ERdknLPMO" crossorigin="anonymous">
-    <link rel="stylesheet" href="resources/scripts/css/main-container-padding.css">
+    <link rel="stylesheet" href="resources/css/main-container-padding.css">
     <!--jquery integration-->
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
 
@@ -24,7 +24,7 @@
     <script src="javascript/logIn.js"></script>
 
     <!-- encryption -->
-    <script src="resources/scripts/js/md5.min.js"></script>
+    <script src="javascript/md5.js"></script>
 
     <title>Bookstore of Group G12</title>
 </head>
@@ -66,7 +66,7 @@
 
                 <!-- administration -->
                 <li class="nav-item">
-                    <a class="nav-link" href="stockCatalogue.php">Administration</a>
+                    <a class="nav-link" href="sites/stockCatalogue.php">Administration</a>
                 </li>
 
                 <li class="nav-item">
@@ -87,7 +87,7 @@
 
                 <!-- registration button -->
                 <li class="nav-item">
-                    <a href="signUp.html">
+                    <a href="sites/signUp.html">
                         <button type="button" class="btn btn-light" id="btnSignUp">
                             Sign Up
                         </button>
@@ -163,7 +163,7 @@
 
 
 <!--main-->
-<main class="container">
+<main class="container top-container bottom-container">
     <div class="row">
         <div class="col-9 text-justify" id="article">
             <h3>Main content section</h3>
@@ -183,7 +183,7 @@
     <div class="container text-muted text-center">
         <div class="row">
             <div class="col-4">
-                <a href="contact.html">Imprint</a>
+                <a href="sites/contact.html">Imprint</a>
             </div>
             <div class="col-4">
                 <span>E-Mail:
@@ -262,13 +262,6 @@
         });
     });
 
-    function addToCart() {
-        if (sessionStorage.getItem('loggedIn') === 'true') {
-
-        } else {
-            alert("Please log in first");
-        }
-    }
 </script>
 
 </body>
