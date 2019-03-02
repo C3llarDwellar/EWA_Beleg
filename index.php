@@ -249,6 +249,11 @@
         });
 
         createLoginButton();
+        if (sessionStorage.getItem('uid') !== null) {
+            createLogoutButton();
+        }
+
+        checkCartAmount(sessionStorage['uid']);
 
         //on-click function that handles every click on any of the generated cards
         main.on('click', 'div.card', function () {
@@ -266,8 +271,6 @@
                 }
             });
         });
-
-        checkCartAmount(sessionStorage['uid']);
 
         $('#productDetailModal').on('show.bs.modal', function () {
             let modal = $(this);

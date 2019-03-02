@@ -26,14 +26,14 @@ function logIn() {
             }
         }
     });
-    checkCartAmount();
+    checkCartAmount(sessionStorage['uid']);
     return returnValue;
 }
 
 function logOut() {
     sessionStorage.removeItem('uid');
     createLoginButton();
-    checkCartAmount();
+    checkCartAmount(sessionStorage['uid']);
 }
 
 function createLoginButton() {
@@ -56,7 +56,7 @@ function createLogoutButton() {
         success: function (data) {
             logInLi.empty();
             logInLi.append(data);
-            checkCartAmount();
+            checkCartAmount(sessionStorage['uid']);
         }
     });
 }
