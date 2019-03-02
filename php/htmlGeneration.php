@@ -8,7 +8,6 @@
 
 include "databaseOperations.php";
 
-// TODO: Properties file
 $config = parse_ini_file("../resources/configuration/app.ini");
 /*
 $result = selectAllBooks("localhost", "G12", "ru37w", "g12");
@@ -57,6 +56,15 @@ if (isset($_GET['action']) && !empty($_GET['action'])) {
                 $parameter2 = $_GET['parameter2'];
                 stockInitialize($parameter1, $parameter2);
             }
+            break;
+        case 'logIn' :
+            generateLogInButton();
+            break;
+        case 'logOut' :
+            generateLogOutButton();
+            break;
+        case 'fillCart' :
+            cartContent();
             break;
     }
 }
@@ -356,4 +364,43 @@ function stockInitialize($info, $layout)
     echo $htmlString;
 }
 
+
+function generateLogInButton() {
+    echo "<button type=\"button\" class=\"btn btn-light\" id=\"btnLogIn\" data-toggle=\"modal\" data-target=\"#logInModal\">Log In</button>";
+}
+
+function generateLogOutButton() {
+    echo "<button type=\"button\" class=\"btn btn-light\" id=\"btnLogOut\" onclick='logOut()'>Log Out</button>";
+}
+
+function cartContent() {
+    session_start();
+    if (isset($_GET['sessionId'])) {
+        if ($_GET['sessionId'] == $_SESSION['uid']) {
+            $htmlString = "";
+            $totalPrice = 0;
+
+            $cart = $_SESSION['cart'];
+            foreach ($cart AS $productId => $amount) {
+                $book = getBookById($productId);
+                $title = "";
+                $price = 0;
+                while ($row = $book->fetch_assoc()) {
+                    $title = $row['Produkttitel'];
+                    $price = $row['PreisNetto'] * $amount;
+                    $totalPrice = $totalPrice + $price;
+                }
+
+                $htmlString .= "<div class='row'>";
+                    $htmlString .= "<div class='col-4'>".$title."</div>";
+                    $htmlString .= "<div class='col-2'>".$amount." times</div>";
+                    $htmlString .= "<div class='col-3'>".$price."€</div>";
+                $htmlString .= "</div>";
+            }
+
+            $htmlString .= "<br>Total Price: ".$totalPrice."€";
+            echo $htmlString;
+        } else echo "Log in to create a cart.";
+    } else echo "Log in to create a cart.";
+}
 ?>

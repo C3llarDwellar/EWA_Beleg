@@ -5,6 +5,10 @@
 .bottom-container {
     margin-bottom: 30px;
 }
+main {
+    margin-top: 60px;
+    margin-bottom: 60px;
+}
 
 .form-control {
     width: 180px;

@@ -8,10 +8,14 @@ $password = $_POST['password'] or die("Password required");
 
 if (doesUserExist($username)) {
     if (isPasswordCorrect($username, $password)) {
-        die(true);
+        $uid = md5(uniqid(rand()));
+        session_start();
+        $_SESSION['uid'] = $uid;
+        $_SESSION['cart'] = [];
+        die($uid);
     } else {
-        die(false);
+        die("password incorrect");
     }
 } else {
-    die(false);
+    die("unknown user");
 }

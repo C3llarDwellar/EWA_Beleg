@@ -26,6 +26,9 @@
     <!-- encryption -->
     <script src="javascript/md5.js"></script>
 
+    <!-- cart -->
+    <script src="javascript/cartInteraction.js"></script>
+
     <title>Bookstore of Group G12</title>
 </head>
 <body>
@@ -71,18 +74,21 @@
 
                 <li class="nav-item">
                     <form>
-                        <input id="search" type="text" name="search" placeholder="Search..">
+                        <input id="search" type="text" class="form-control" name="search" placeholder="Search..">
                     </form>
                 </li>
             </ul>
 
             <!-- right elements -->
             <ul class="navbar-nav ml-auto">
-                <!-- login button -->
+                <!-- cart -->
                 <li class="nav-item">
-                    <button type="button" class="btn btn-light" id="btnLogIn" data-toggle="modal" data-target="#logInModal">
-                        Log in
+                    <button type="button" class="btn btn-light" id="cartButton" data-toggle="modal" data-target="#cartModal">
                     </button>
+                </li>
+
+                <!-- login button -->
+                <li class="nav-item" id="logInLi">
                 </li>
 
                 <!-- registration button -->
@@ -111,9 +117,8 @@
             </div>
             <div class="modal-body">
 
-                <!-- TODO: Log out -->
                 <!-- actual form for logging in -->
-                <form id="logInForm" action="javascript:logIn();">
+                <form id="logInForm" method="post">
                     <!-- username -->
                     <div class="form-group">
                         <label for="logInFormUser">Username</label>
@@ -125,10 +130,26 @@
                         <input type="password" name="password" class="form-control" id="logInFormPassword" minlength="2" required>
                     </div>
 
-                    <input type="submit" value="Log In">
+                    <input type="button" class="btn btn-light" id="logInButton" value="Log In">
                 </form>
 
                 <div class="row" id="logInFormResult"></div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="modal fade" role="dialog" id="cartModal">
+    <div class="modal-dialog modal-dialog-centered" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title">Shopping Cart</h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">x</span>
+                </button>
+            </div>
+            <div class="modal-body">
+                <div id="cartContent"></div>
             </div>
         </div>
     </div>
@@ -153,7 +174,8 @@
             </div>
             <div class="modal-footer">
                 <span>
-                    <button type="button" class="btn btn-light" id="btnAddToCart" onclick="addToCart()">+</button>
+                    <label id="cartAmount"></label>
+                    <button type="button" class="btn btn-light" id="btnAddToCart">+</button>
                     <button type="button" class="btn btn-light" id="btnRemoveFromCart">-</button>
                 </span>
             </div>
@@ -210,6 +232,12 @@
     let search = $('#search'); //search bar
     let searchString;       //what's in the search bar
 
+    let addToCartButton = $('#btnAddToCart');
+    let removeFromCartButton = $('#btnRemoveFromCart');
+
+    let logInLi = $('#logInLi');
+    let loginSubmit = $('#logInButton');
+
     $(document).ready(function () {
         $.ajax({
             url: 'php/htmlGeneration.php',
@@ -220,6 +248,13 @@
                 $('#article').append(htmlString)
             }
         });
+
+        createLoginButton();
+        if (sessionStorage.getItem('uid') !== null) {
+            createLogoutButton();
+        }
+
+        checkCartAmount(sessionStorage['uid']);
 
         //on-click function that handles every click on any of the generated cards
         main.on('click', 'div.card', function () {
@@ -233,6 +268,7 @@
                 success: function (data) {
                     htmlString = data;
                     $('#productDetailModal').modal('show');
+                    checkCartAmountForProduct(sessionStorage['uid'], id);
                 }
             });
         });
@@ -242,6 +278,10 @@
             modal.find('.modal-title').text(product);
             modal.find('.modal-body').empty();
             modal.find('.modal-body').append(htmlString);
+        });
+
+        loginSubmit.on('click', function () {
+            logIn();
         });
 
         //reloads articles according to what is entered in the searchbar
@@ -260,8 +300,23 @@
                 }
             });
         });
-    });
 
+        addToCartButton.on('click', function () {
+            let sessionId = sessionStorage['uid'];
+            addToCart(sessionId, id);
+            checkCartAmount(sessionId);
+        });
+
+        removeFromCartButton.on('click', function () {
+            let sessionId = sessionStorage['uid'];
+            removeFromCart(sessionId, id);
+            checkCartAmount(sessionId);
+        });
+
+        $('#cartButton').on('click', function() {
+            fillCartModal();
+        })
+    });
 </script>
 
 </body>
