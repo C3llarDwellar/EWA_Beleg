@@ -75,3 +75,19 @@ function checkCartAmountForProduct(sessionId, productId) {
         }
     });
 }
+
+function fillCartModal() {
+    let cartContent = $('#cartContent');
+    $.ajax({
+        url: 'php/htmlGeneration.php',
+        type: 'GET',
+        data: {
+            action: 'fillCart',
+            sessionId: sessionStorage['uid']
+        },
+        success: function (data) {
+            cartContent.empty();
+            cartContent.append(data);
+        }
+    })
+}

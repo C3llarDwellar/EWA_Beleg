@@ -148,7 +148,7 @@
                 </button>
             </div>
             <div class="modal-body">
-                Content goes here
+                <div id="cartContent"></div>
             </div>
         </div>
     </div>
@@ -307,6 +307,10 @@
             let sessionId = sessionStorage['uid'];
             removeFromCart(sessionId, id);
             checkCartAmount(sessionId);
+        });
+
+        $('#cartButton').on('click', function() {
+            fillCartModal();
         })
     });
 </script>

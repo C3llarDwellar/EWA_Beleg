@@ -46,6 +46,7 @@ if (isset($_GET['action']) && !empty($_GET['action'])) {
         case 'stockInit' : stockInitialize();break;
         case 'logIn' : generateLogInButton();break;
         case 'logOut' : generateLogOutButton();break;
+        case 'fillCart' : cartContent();break;
     }
 }
 
@@ -267,5 +268,25 @@ function generateLogInButton() {
 
 function generateLogOutButton() {
     echo "<button type=\"button\" class=\"btn btn-light\" id=\"btnLogOut\" onclick='logOut()'>Log Out</button>";
+}
+
+function cartContent() {
+    session_start();
+    if ($_GET['sessionId'] == $_SESSION['uid']) {
+        $htmlString = "";
+
+        $cart = $_SESSION['cart'];
+        foreach ($cart AS $productId => $amount) {
+            $book = getBookById($productId);
+            $title = "";
+            while ($row = $book->fetch_assoc()) {
+                $title = $row['Produkttitel'];
+            }
+            $htmlString .= $title." * ".$amount;
+            $htmlString .= "<br>";
+        }
+
+        echo $htmlString;
+    } else echo "Log in to create a cart.";
 }
 ?>
