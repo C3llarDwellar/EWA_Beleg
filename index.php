@@ -116,7 +116,6 @@
             </div>
             <div class="modal-body">
 
-                <!-- TODO: Log out -->
                 <!-- actual form for logging in -->
                 <form id="logInForm" method="post">
                     <!-- username -->
@@ -134,6 +133,22 @@
                 </form>
 
                 <div class="row" id="logInFormResult"></div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="modal fade" role="dialog" id="cartModal">
+    <div class="modal-dialog modal-dialog-centered" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title">Shopping Cart</h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">x</span>
+                </button>
+            </div>
+            <div class="modal-body">
+                Content goes here
             </div>
         </div>
     </div>

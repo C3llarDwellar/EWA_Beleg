@@ -8,7 +8,6 @@
 
 include "databaseOperations.php";
 
-// TODO: Properties file
 $config = parse_ini_file("../resources/configuration/app.ini");
 /*
 $result = selectAllBooks("localhost", "G12", "ru37w", "g12");
