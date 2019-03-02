@@ -272,21 +272,32 @@ function generateLogOutButton() {
 
 function cartContent() {
     session_start();
-    if ($_GET['sessionId'] == $_SESSION['uid']) {
-        $htmlString = "";
+    if (isset($_GET['sessionId'])) {
+        if ($_GET['sessionId'] == $_SESSION['uid']) {
+            $htmlString = "";
+            $totalPrice = 0;
 
-        $cart = $_SESSION['cart'];
-        foreach ($cart AS $productId => $amount) {
-            $book = getBookById($productId);
-            $title = "";
-            while ($row = $book->fetch_assoc()) {
-                $title = $row['Produkttitel'];
+            $cart = $_SESSION['cart'];
+            foreach ($cart AS $productId => $amount) {
+                $book = getBookById($productId);
+                $title = "";
+                $price = 0;
+                while ($row = $book->fetch_assoc()) {
+                    $title = $row['Produkttitel'];
+                    $price = $row['PreisNetto'] * $amount;
+                    $totalPrice = $totalPrice + $price;
+                }
+
+                $htmlString .= "<div class='row'>";
+                    $htmlString .= "<div class='col-4'>".$title."</div>";
+                    $htmlString .= "<div class='col-2'>".$amount." times</div>";
+                    $htmlString .= "<div class='col-3'>".$price."€</div>";
+                $htmlString .= "</div>";
             }
-            $htmlString .= $title." * ".$amount;
-            $htmlString .= "<br>";
-        }
 
-        echo $htmlString;
+            $htmlString .= "<br>Total Price: ".$totalPrice."€";
+            echo $htmlString;
+        } else echo "Log in to create a cart.";
     } else echo "Log in to create a cart.";
 }
 ?>
