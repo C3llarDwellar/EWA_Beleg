@@ -380,9 +380,11 @@ function cartContent() {
             $htmlString = "";
             $totalPrice = 0;
 
+            $sessionId = $_SESSION['uid'];
             $cart = $_SESSION['cart'];
             foreach ($cart AS $productId => $amount) {
                 $book = getBookById($productId);
+                $productId = 0;
                 $title = "";
                 $price = 0;
                 while ($row = $book->fetch_assoc()) {
@@ -399,6 +401,8 @@ function cartContent() {
             }
 
             $htmlString .= "<br>Total Price: ".$totalPrice."€";
+            $htmlString .= "<br><a><button class='btn btn-light'>Check Out</button></a>";
+
             echo $htmlString;
         } else echo "Log in to create a cart.";
     } else echo "Log in to create a cart.";
