@@ -1,3 +1,10 @@
+.top-container {
+    margin-top: 60px;
+}
+
+.bottom-container {
+    margin-bottom: 30px;
+}
 main {
     margin-top: 60px;
     margin-bottom: 60px;
@@ -19,4 +26,8 @@ main {
 
 .form-control:focus {
     width: 100%;
+}
+
+.error-tooltip {
+    color: red;
 }

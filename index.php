@@ -22,7 +22,9 @@
 
     <!-- login -->
     <script src="javascript/logIn.js"></script>
-    <script src="resources/scripts/js/md5.min.js"></script>
+
+    <!-- encryption -->
+    <script src="javascript/md5.js"></script>
 
     <!-- cart -->
     <script src="javascript/cartInteraction.js"></script>
@@ -67,7 +69,7 @@
 
                 <!-- administration -->
                 <li class="nav-item">
-                    <a class="nav-link" href="stockCatalogue.php">Administration</a>
+                    <a class="nav-link" href="sites/stockCatalogue.php">Administration</a>
                 </li>
 
                 <li class="nav-item">
@@ -81,7 +83,6 @@
             <ul class="navbar-nav ml-auto">
                 <!-- cart -->
                 <li class="nav-item">
-                    <!-- TODO: Cart Modal -->
                     <button type="button" class="btn btn-light" id="cartButton" data-toggle="modal" data-target="#cartModal">
                     </button>
                 </li>
@@ -92,7 +93,7 @@
 
                 <!-- registration button -->
                 <li class="nav-item">
-                    <a href="signUp.html">
+                    <a href="sites/signUp.html">
                         <button type="button" class="btn btn-light" id="btnSignUp">
                             Sign Up
                         </button>
@@ -184,7 +185,7 @@
 
 
 <!--main-->
-<main class="container">
+<main class="container top-container bottom-container">
     <div class="row">
         <div class="col-9 text-justify" id="article">
             <h3>Main content section</h3>
@@ -204,7 +205,7 @@
     <div class="container text-muted text-center">
         <div class="row">
             <div class="col-4">
-                <a href="contact.html">Imprint</a>
+                <a href="sites/contact.html">Imprint</a>
             </div>
             <div class="col-4">
                 <span>E-Mail:
