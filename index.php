@@ -34,18 +34,18 @@
 <body>
 
 <!--navbar header-->
-<nav class="navbar navbar-expand-md navbar-light bg-light fixed-top">
+<nav class="navbar navbar-expand-lg navbar-light bg-light fixed-top">
     <div class="container">
         <!-- brand -->
         <a class="navbar-brand">Bookstore</a>
 
         <!-- toggle button -->
-        <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNavAltMarkup"
-                aria-controls="navbarNavAltMarkup" aria-expanded="false" aria-label="Toggle navigation">
+        <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarContent"
+                aria-controls="navbarContent" aria-expanded="false" aria-label="Toggle navigation">
             <span class="navbar-toggler-icon"></span>
         </button>
 
-        <div class="navbar-collapse collapse" id="navbarContent">
+        <div class="collapse navbar-collapse" id="navbarContent">
 
             <!-- left elements -->
             <ul class="navbar-nav mr-auto">
@@ -188,10 +188,10 @@
 <!--main-->
 <main class="container top-container bottom-container">
     <div class="row">
-        <div class="col-9 text-justify" id="article">
+        <div class="col-lg-9 col-md-12" id="article">
             <h3>Main content section</h3>
         </div>
-        <div class="col-3" id="aside">
+        <div class="col-lg-3 col-md-12" id="aside">
             <h3 id="news">News section</h3>
             <!--lorem ipsum placeholder-->
             <span>Als nächstes muss es möglich sein, die Bücher zu bestellen.</span>
@@ -205,15 +205,15 @@
 <footer class="footer bg-light">
     <div class="container text-muted text-center">
         <div class="row">
-            <div class="col-4">
+            <div class="col-lg-4 col-sm-12">
                 <a href="sites/contact.html">Imprint</a>
             </div>
-            <div class="col-4">
+            <div class="col-lg-4 col-sm-12">
                 <span>E-Mail:
                     <a href="mailto:someone@example.com">totalEchte@adresse.de</a>
                 </span>
             </div>
-            <div class="col-4">
+            <div class="col-lg-4 col-sm-12">
                 <span>&copy; Copyright:
                     <a href="https://www.htw-dresden.de/startseite.html">HTW Dresden</a>
                 </span>
