@@ -411,11 +411,20 @@ function cartContent() {
             }
 
             $htmlString .= "<br>Will be sent to: ".$userName.", ".$address;
+            $htmlString .= "<br>".generateCreditCardForm();
             $htmlString .= "<br><button class='btn btn-light' onclick='checkOut()'>Check Out</button>";
 
             echo $htmlString;
         } else echo "Log in to create a cart.";
     } else echo "Log in to create a cart.";
+}
+
+function generateCreditCardForm() {
+    echo "<form action='javascript: checkCreditCard()'>
+	<input id='ccNumber' name='ccNumber' type='text' class='form-control'>
+	<input type=submit value='Check Credit Card' class='btn btn-light'>
+	<label id='ccResult'></label>
+	</form>";
 }
 
 function generateAdminLink() {

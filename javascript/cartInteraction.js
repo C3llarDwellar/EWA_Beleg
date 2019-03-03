@@ -107,3 +107,22 @@ function checkOut() {
         }
     })
 }
+
+function checkCreditCard() {
+    let ccNumber = $('#ccNumber').val();
+    let ccLabel = $('#ccResult');
+    $.ajax({
+        url: 'php/ws_client.php',
+        type: 'POST',
+        data: {ccNumber: ccNumber},
+        success: function (data) {
+            if (data === 'true') {
+                ccLabel.empty();
+                ccLabel.append("Credit Card valid");
+            } else {
+                ccLabel.empty();
+                ccLabel.append("Credit Card invalid");
+            }
+        }
+    })
+}
