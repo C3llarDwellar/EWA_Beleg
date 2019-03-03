@@ -66,6 +66,9 @@ if (isset($_GET['action']) && !empty($_GET['action'])) {
         case 'fillCart' :
             cartContent();
             break;
+        case 'admin' :
+            generateAdminLink();
+            break;
     }
 }
 
@@ -413,5 +416,9 @@ function cartContent() {
             echo $htmlString;
         } else echo "Log in to create a cart.";
     } else echo "Log in to create a cart.";
+}
+
+function generateAdminLink() {
+    echo "<a class=\"nav-link\" href=\"../sites/stockCatalogue.php\">Administration</a>";
 }
 ?>

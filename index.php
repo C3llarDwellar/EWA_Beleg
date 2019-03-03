@@ -68,8 +68,8 @@
                 </li>
 
                 <!-- administration -->
-                <li class="nav-item">
-                    <a class="nav-link" href="sites/stockCatalogue.php">Administration</a>
+                <li id="adminArea" class="nav-item">
+
                 </li>
 
                 <li class="nav-item">
@@ -316,7 +316,9 @@
 
         $('#cartButton').on('click', function() {
             fillCartModal();
-        })
+        });
+
+        admin();
     });
 </script>
 
