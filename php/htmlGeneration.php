@@ -312,17 +312,18 @@ function stockInitialize($info, $layout)
                 <div class='card w-100 border-danger'>
                     <div class='card-body'>
                         <div class='row'>
-                            <div class='col-9'>
+                            <div class='col-xl-5 col-lg-7 col-md-12'>
                                 <span>" . $title[$i] . "</span>
                             </div>
-                            <div class='col-1'>
+                            <div class='col-xl-1 col-md-4'>
                                 <span>" . $stock[$i] . "</span>
                             </div>
-                            <div class='col-1'>
+                            <div class='col-xl-1 col-md-4'>
                                 <span>" . $price[$i] . "€</span>                        
                             </div>
-                            <div class='col-1'>
+                            <div class='col-xl-1 col-md-4'>
                                 <span>" . $stock[$i] * $price[$i] . "€</span>                        
+                            </div>                     
                             </div>
                         </div>
                     </div>
