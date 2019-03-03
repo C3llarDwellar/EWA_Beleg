@@ -1,4 +1,5 @@
 function addToCart(sessionId, productId) {
+    console.log("addToCart() called with sessionId: " + sessionId + " and productId: " + productId);
     let amountLabel = $('#cartAmount');
     $.ajax({
         url: 'php/addToCart.php',
@@ -17,9 +18,11 @@ function addToCart(sessionId, productId) {
             }
         }
     });
+    fillCartModal();
 }
 
 function removeFromCart(sessionId, productId) {
+    console.log("removeFromCart() called with sessionId: " + sessionId + " and productId: " + productId);
     let amountLabel = $('#cartAmount');
     $.ajax({
         url: 'php/removeFromCart.php',
@@ -38,6 +41,7 @@ function removeFromCart(sessionId, productId) {
             }
         }
     });
+    fillCartModal();
 }
 
 function checkCartAmount(sessionId) {
@@ -88,6 +92,18 @@ function fillCartModal() {
         success: function (data) {
             cartContent.empty();
             cartContent.append(data);
+        }
+    })
+}
+
+function checkOut() {
+    $.ajax({
+        url: 'php/emptyCart.php',
+        type: 'GET',
+        data: {},
+        success: function (data) {
+            checkCartAmount();
+            $('#cartModal').modal('hide');
         }
     })
 }

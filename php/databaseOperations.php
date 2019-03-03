@@ -121,4 +121,32 @@ function isPasswordCorrect($name, $pass) {
     }
     return false;
 }
+
+function findUserByName($name) {
+    $mysqli = connectToDatabase();
+
+    $query = "SELECT * FROM user WHERE Username LIKE ?";
+    $statement = $mysqli->prepare($query);
+    $statement->bind_param('s', $name);
+    $statement->execute();
+
+    return $statement->get_result();
+}
+
+function isUserAdmin($name) {
+    $mysqli = connectToDatabase();
+
+    $query = "SELECT * FROM user WHERE Username LIKE ?";
+    $statement = $mysqli->prepare($query);
+    $statement->bind_param('s', $name);
+    $statement-> execute();
+
+    $result = $statement->get_result();
+    while ($row = $result->fetch_assoc()) {
+        if ($row['IsAdmin'] == 1) {
+            return true;
+        }
+    }
+    return false;
+}
 ?>

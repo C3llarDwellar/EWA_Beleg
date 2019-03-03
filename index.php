@@ -68,8 +68,8 @@
                 </li>
 
                 <!-- administration -->
-                <li class="nav-item">
-                    <a class="nav-link" href="sites/stockCatalogue.php">Administration</a>
+                <li id="adminArea" class="nav-item">
+
                 </li>
 
                 <li class="nav-item">
@@ -139,6 +139,7 @@
     </div>
 </div>
 
+<!-- Cart Modal -->
 <div class="modal fade" role="dialog" id="cartModal">
     <div class="modal-dialog modal-dialog-centered" role="document">
         <div class="modal-content">
@@ -315,7 +316,9 @@
 
         $('#cartButton').on('click', function() {
             fillCartModal();
-        })
+        });
+
+        admin();
     });
 </script>
 
