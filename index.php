@@ -191,10 +191,10 @@
 <!--main-->
 <main class="container top-container bottom-container">
     <div class="row">
-        <div class="col-lg-9 col-md-12" id="article">
+        <div class="col-lg-8 col-md-12" id="article">
             <h3>Our Products</h3>
         </div>
-        <div class="col-lg-3 col-md-12" id="aside">
+        <div class="col-lg-4 col-md-12" id="aside">
             <h3 id="news">Google Books</h3>
 
             <form>
@@ -239,8 +239,7 @@
     let htmlString = "";    //string that is filled with dynamic html
 
     let search = $('#search'); //search bar
-
-    let googleSearch = $('#googleSearch');
+    let googleSearch = $('#googleSearch'); //google search bar
 
     let addToCartButton = $('#btnAddToCart');
     let removeFromCartButton = $('#btnRemoveFromCart');
@@ -329,7 +328,7 @@
 
         admin();
 
-        googleSearch.onkeyup(function () {
+        googleSearch.keyup(function () {
             let searchString = googleSearch.val();
 
             generateGoogleBooks(searchString);
