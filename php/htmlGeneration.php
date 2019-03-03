@@ -145,7 +145,7 @@ function generateCards()
         }
 
         $htmlString .= "
-            <div class='col-3 d-flex align-items-stretch'>
+            <div class='col-lg-3 col-md-6 col-sm-12 d-flex align-items-stretch'>
                 <div class='card w-100 h-100' data-id='" . $id[$i] . "' data-product='" . $title[$i] . "'>
                     <div class='card-body'>
                         <h5 class='card-title'>" . $title[$i] . "</h5>
@@ -192,7 +192,7 @@ function searchRequest()
             if (strpos($lowerTitle, $search) !== false || strpos($lowerAuthor, $search) !== false) {
 
                 $cardString = "
-            <div class='col-3'>
+            <div class='col-lg-3 col-md-6 col-sm-12 d-flex align-items-stretch'>
                 <div class='card w-100 h-100' data-id='" . $id[$i] . "' data-product='" . $title[$i] . "'>
                     <div class='card-body'>
                         <h5 class='card-title'>" . $title[$i] . "</h5>
@@ -250,19 +250,19 @@ function stockInitialize($info, $layout)
                 <div class='card w-100 border-danger'>
                     <div class='card-body'>
                         <div class='row'>
-                            <div class='col-5'>
+                            <div class='col-xl-5 col-lg-7 col-md-12'>
                                 <span>" . $title[$i] . "</span>
                             </div>
-                            <div class='col-4'>
+                            <div class='col-xl-4 col-lg-5 col-md-12'>
                                 <span>" . $isbn[$i] . "</span>
                             </div>
-                            <div class='col-1'>
+                            <div class='col-xl-1 col-md-4'>
                                 <span>" . $stock[$i] . "</span>
                             </div>
-                            <div class='col-1'>
+                            <div class='col-xl-1 col-md-4'>
                                 <span>" . $price[$i] . "€</span>                        
                             </div>
-                            <div class='col-1'>
+                            <div class='col-xl-1 col-md-4'>
                                 <span>" . $stock[$i] * $price[$i] . "€</span>                        
                             </div>
                         </div>
@@ -276,7 +276,7 @@ function stockInitialize($info, $layout)
                 $htmlString .= "<div class='row'>";
             }
 
-            $htmlString .= "<div class='col-3 d-flex align-items-stretch'>
+            $htmlString .= "<div class='col-lg-3 col-md-6 col-sm-12 d-flex align-items-stretch'>
                 <div class='card w-100 h-100 border-danger'>
                     <div class='card-body'>
                         <div class='row'>
@@ -335,7 +335,7 @@ function stockInitialize($info, $layout)
                 $htmlString .= "<div class='row'>";
             }
 
-            $htmlString .= "<div class='col-3 d-flex align-items-stretch'>
+            $htmlString .= "<div class='col-lg-3 col-md-6 col-sm-12 d-flex align-items-stretch'>
                 <div class='card w-100 h-100 border-danger'>
                     <div class='card-body'>
                         <div class='row'>
