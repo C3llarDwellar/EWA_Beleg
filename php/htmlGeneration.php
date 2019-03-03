@@ -69,6 +69,16 @@ if (isset($_GET['action']) && !empty($_GET['action'])) {
         case 'admin' :
             generateAdminLink();
             break;
+        case 'googleBooks':
+            if (isset($_GET['title']) && isset($_GET['isbn']) && isset($_GET['identifierType']) && isset($_GET['infoLink']) && isset($_GET['thumbnail'])) {
+                $title = $_GET['title'];
+                $isbn = $_GET['isbn'];
+                $identifierType = $_GET['identifierType'];
+                $infoLink = $_GET['infoLink'];
+                $thumbnail = $_GET['thumbnail'];
+                generateGoogleBooks($title, $isbn, $identifierType, $infoLink, $thumbnail);
+        }
+            break;
     }
 }
 
@@ -368,7 +378,6 @@ function stockInitialize($info, $layout)
     echo $htmlString;
 }
 
-
 function generateLogInButton() {
     echo "<button type=\"button\" class=\"btn btn-light\" id=\"btnLogIn\" data-toggle=\"modal\" data-target=\"#logInModal\">Log In</button>";
 }
@@ -430,5 +439,12 @@ function generateCreditCardForm() {
 
 function generateAdminLink() {
     echo "<a class=\"nav-link\" href=\"../sites/stockCatalogue.php\">Administration</a>";
+}
+
+function generateGoogleBooks($title, $isbn, $identifierType, $infoLink, $thumbnail) {
+    $thumbnailImage = "<img src='".$thumbnail."'>";
+    $htmlString = "<a href='".$infoLink."'><div>".$thumbnailImage."".$title."</div><div>".$identifierType.": ".$isbn."</a></div>";
+
+    echo $htmlString;
 }
 ?>
