@@ -95,3 +95,15 @@ function fillCartModal() {
         }
     })
 }
+
+function checkOut() {
+    $.ajax({
+        url: 'php/emptyCart.php',
+        type: 'GET',
+        data: {},
+        success: function (data) {
+            checkCartAmount();
+            $('#cartModal').modal('hide');
+        }
+    })
+}

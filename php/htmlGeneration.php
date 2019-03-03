@@ -380,11 +380,9 @@ function cartContent() {
             $htmlString = "";
             $totalPrice = 0;
 
-            $sessionId = $_SESSION['uid'];
             $cart = $_SESSION['cart'];
             foreach ($cart AS $productId => $amount) {
                 $book = getBookById($productId);
-                $productId = 0;
                 $title = "";
                 $price = 0;
                 while ($row = $book->fetch_assoc()) {
@@ -401,7 +399,16 @@ function cartContent() {
             }
 
             $htmlString .= "<br>Total Price: ".$totalPrice."€";
-            $htmlString .= "<br><a><button class='btn btn-light'>Check Out</button></a>";
+
+            $userName = $_SESSION['userName'];
+            $user = findUserByName($userName);
+            $address = "";
+            while ($row = $user->fetch_assoc()) {
+                $address = $row['UserAdresse'];
+            }
+
+            $htmlString .= "<br>Will be sent to: ".$userName.", ".$address;
+            $htmlString .= "<br><button class='btn btn-light' onclick='checkOut()'>Check Out</button>";
 
             echo $htmlString;
         } else echo "Log in to create a cart.";
