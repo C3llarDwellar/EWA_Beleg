@@ -29,6 +29,9 @@
     <!-- cart -->
     <script src="javascript/cartInteraction.js"></script>
 
+    <!-- Google API -->
+    <script src="javascript/googleBooks.js"></script>
+
     <title>Bookstore of Group G12</title>
 </head>
 <body>
@@ -189,12 +192,17 @@
 <main class="container top-container bottom-container">
     <div class="row">
         <div class="col-lg-9 col-md-12" id="article">
-            <h3>Main content section</h3>
+            <h3>Our Products</h3>
         </div>
         <div class="col-lg-3 col-md-12" id="aside">
-            <h3 id="news">News section</h3>
-            <!--lorem ipsum placeholder-->
-            <span>Als nächstes muss es möglich sein, die Bücher zu bestellen.</span>
+            <h3 id="news">Google Books</h3>
+
+            <form>
+                <input id="googleSearch" type="text" class="form-control" name="search" placeholder="Search Google Books...">
+            </form>
+            <div id="googleBooks">
+
+            </div>
         </div>
     </div>
 </main>
@@ -231,7 +239,8 @@
     let htmlString = "";    //string that is filled with dynamic html
 
     let search = $('#search'); //search bar
-    let searchString;       //what's in the search bar
+
+    let googleSearch = $('#googleSearch');
 
     let addToCartButton = $('#btnAddToCart');
     let removeFromCartButton = $('#btnRemoveFromCart');
@@ -287,7 +296,7 @@
 
         //reloads articles according to what is entered in the searchbar
         search.keyup(function () {
-            searchString = search.val();
+            let searchString = search.val();
 
             $.ajax({
                 url: 'php/htmlGeneration.php',
@@ -319,6 +328,12 @@
         });
 
         admin();
+
+        googleSearch.onkeyup(function () {
+            let searchString = googleSearch.val();
+
+            generateGoogleBooks(searchString);
+        });
     });
 </script>
 

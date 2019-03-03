@@ -69,6 +69,9 @@ if (isset($_GET['action']) && !empty($_GET['action'])) {
         case 'admin' :
             generateAdminLink();
             break;
+        case 'googleBooks':
+            generateGoogleBooks();
+            break;
     }
 }
 
@@ -430,5 +433,9 @@ function generateCreditCardForm() {
 
 function generateAdminLink() {
     echo "<a class=\"nav-link\" href=\"../sites/stockCatalogue.php\">Administration</a>";
+}
+
+function generateGoogleBooks() {
+
 }
 ?>
