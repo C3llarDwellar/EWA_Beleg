@@ -29,6 +29,9 @@
     <!-- cart -->
     <script src="javascript/cartInteraction.js"></script>
 
+    <!-- overall functionality -->
+    <script src="javascript/pageFunctions.js"></script>
+
     <!-- Google API -->
     <script src="javascript/googleBooks.js"></script>
 
@@ -54,7 +57,7 @@
             <ul class="navbar-nav mr-auto">
                 <!-- home-button -->
                 <li class="nav-item">
-                    <a class="nav-link active" href="#">Home <span class="sr-only">(current)</span></a>
+                    <a class="nav-link active" href="index.php">Home <span class="sr-only">(current)</span></a>
                 </li>
 
                 <!-- dropdown-menu -->
@@ -96,7 +99,7 @@
 
                 <!-- registration button -->
                 <li class="nav-item">
-                    <a href="sites/signUp.html">
+                    <a href="signUp.html">
                         <button type="button" class="btn btn-light" id="btnSignUp">
                             Sign Up
                         </button>
@@ -210,11 +213,11 @@
 
 <!--footer-->
 <!--"fixed-bottom" can be added-->
-<footer class="footer bg-light">
+<footer class="footer bg-light fixed-bottom">
     <div class="container text-muted text-center">
         <div class="row">
             <div class="col-lg-4 col-sm-12">
-                <a href="sites/contact.html">Imprint</a>
+                <a href="contact.html">Imprint</a>
             </div>
             <div class="col-lg-4 col-sm-12">
                 <span>E-Mail:
@@ -244,9 +247,6 @@
     let addToCartButton = $('#btnAddToCart');
     let removeFromCartButton = $('#btnRemoveFromCart');
 
-    let logInLi = $('#logInLi');
-    let loginSubmit = $('#logInButton');
-
     $(document).ready(function () {
         $.ajax({
             url: 'php/htmlGeneration.php',
@@ -257,13 +257,6 @@
                 $('#article').append(htmlString)
             }
         });
-
-        createLoginButton();
-        if (sessionStorage.getItem('uid') !== null) {
-            createLogoutButton();
-        }
-
-        checkCartAmount(sessionStorage['uid']);
 
         //on-click function that handles every click on any of the generated cards
         main.on('click', 'div.card', function () {
@@ -287,10 +280,6 @@
             modal.find('.modal-title').text(product);
             modal.find('.modal-body').empty();
             modal.find('.modal-body').append(htmlString);
-        });
-
-        loginSubmit.on('click', function () {
-            logIn();
         });
 
         //reloads articles according to what is entered in the searchbar

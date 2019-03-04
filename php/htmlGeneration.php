@@ -421,7 +421,7 @@ function generateBankCodeForm() {
 }
 
 function generateAdminLink() {
-    echo "<a class=\"nav-link\" href=\"../sites/stockCatalogue.php\">Administration</a>";
+    echo "<a class=\"nav-link\" href=\"stockCatalogue.php\">Administration</a>";
 }
 
 function generateGoogleBooks($title, $isbn, $identifierType, $infoLink, $thumbnail) {

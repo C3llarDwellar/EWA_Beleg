@@ -39,6 +39,7 @@ function logOut() {
 }
 
 function createLoginButton() {
+    let logInLi = $('#logInLi');
     $.ajax({
         url: 'php/htmlGeneration.php',
         type: 'GET',
@@ -51,6 +52,7 @@ function createLoginButton() {
 }
 
 function createLogoutButton() {
+    let logInLi = $('#logInLi');
     $.ajax({
         url: 'php/htmlGeneration.php',
         type: 'GET',
@@ -100,25 +102,12 @@ function admin() {
                     type: 'GET',
                     data: {action: 'admin'},
                     success: function (data) {
-                        $('#adminArea').empty();
-                        $('#adminArea').append(data);
+                        let adminArea = $('#adminArea');
+                        adminArea.empty();
+                        adminArea.append(data);
                     }
                 });
             }
         }
     });
-
-    /**
-    if (isUserAdmin() === 1) {
-        console.log("received true");
-        $.ajax({
-            url: 'php/htmlGeneration.php',
-            type: 'GET',
-            data: {action: 'admin'},
-            success: function (data) {
-                $('#adminArea').append(data);
-            }
-        });
-    }
-     */
 }
