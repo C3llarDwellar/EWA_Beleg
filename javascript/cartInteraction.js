@@ -126,3 +126,20 @@ function checkCreditCard() {
         }
     })
 }
+
+function checkBankCode() {
+    let bankCode = $('#bcNumber').val();
+    let bank = $('#bank');
+    let postcode = $('#postcode');
+
+    $.ajax({
+        url: 'php/ws_client.php',
+        type: 'POST',
+        data: {bankCode: bankCode},
+        success: function (data) {
+            console.log(data);
+        }, error: function (data) {
+            console.log('iksde');
+        }
+    })
+}

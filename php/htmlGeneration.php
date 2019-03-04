@@ -9,32 +9,6 @@
 include "databaseOperations.php";
 
 $config = parse_ini_file("../resources/configuration/app.ini");
-/*
-$result = selectAllBooks("localhost", "G12", "ru37w", "g12");
-
-
-$id = [];
-$isbn = [];
-$title = [];
-$author = [];
-$publisher = [];
-$price = [];
-$stock = [];
-$summary = [];
-$weight = [];
-
-while ($row = $result->fetch_assoc()) {
-    array_push($id, $row["ProduktID"]);
-    array_push($isbn, $row["Produktcode"]);
-    array_push($title, $row["Produkttitel"]);
-    array_push($author, $row["Autorname"]);
-    array_push($publisher, $row["Verlagsname"]);
-    array_push($price, $row["PreisNetto"]);
-    array_push($stock, $row["Lagerbestand"]);
-    array_push($summary, $row["Kurzinhalt"]);
-    array_push($weight, $row["Gewicht"]);
-}
-*/
 
 
 if (isset($_GET['action']) && !empty($_GET['action'])) {
@@ -422,6 +396,7 @@ function cartContent() {
 
             $htmlString .= "<br>Will be sent to: ".$userName.", ".$address;
             $htmlString .= "<br>".generateCreditCardForm();
+            $htmlString .= "<br>".generateBankCodeForm();
             $htmlString .= "<br><button class='btn btn-light' onclick='checkOut()'>Check Out</button>";
 
             echo $htmlString;
@@ -435,6 +410,15 @@ function generateCreditCardForm() {
 	<input type=submit value='Check Credit Card' class='btn btn-light'>
 	<label id='ccResult'></label>
 	</form>";
+}
+
+function generateBankCodeForm() {
+    echo "<form action='javascript: checkBankCode()'>
+        <input id='bcNumber' name='bcNumber' type='text' class='form-control'>
+        <input type='submit' value='Check Bank Code' class='btn btn-light'>
+        <label id='bank'></label>
+        <label id='postcode'></label>
+    </form>";
 }
 
 function generateAdminLink() {

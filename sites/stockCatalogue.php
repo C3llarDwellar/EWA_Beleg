@@ -95,7 +95,6 @@ if ($_SERVER['PHP_AUTH_USER'] !== 'admin' && $_SERVER['PHP_AUTH_PW'] !== '123456
                         </button>
                     </a>
                 </li>
-                </li>
             </ul>
         </div>
     </div>
