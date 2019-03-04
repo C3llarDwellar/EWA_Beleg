@@ -29,6 +29,9 @@
     <!-- cart -->
     <script src="javascript/cartInteraction.js"></script>
 
+    <!-- overall functionality -->
+    <script src="javascript/pageFunctions.js"></script>
+
     <title>Bookstore of Group G12</title>
 </head>
 <body>
@@ -236,9 +239,6 @@
     let addToCartButton = $('#btnAddToCart');
     let removeFromCartButton = $('#btnRemoveFromCart');
 
-    let logInLi = $('#logInLi');
-    let loginSubmit = $('#logInButton');
-
     $(document).ready(function () {
         $.ajax({
             url: 'php/htmlGeneration.php',
@@ -249,13 +249,6 @@
                 $('#article').append(htmlString)
             }
         });
-
-        createLoginButton();
-        if (sessionStorage.getItem('uid') !== null) {
-            createLogoutButton();
-        }
-
-        checkCartAmount(sessionStorage['uid']);
 
         //on-click function that handles every click on any of the generated cards
         main.on('click', 'div.card', function () {
@@ -279,10 +272,6 @@
             modal.find('.modal-title').text(product);
             modal.find('.modal-body').empty();
             modal.find('.modal-body').append(htmlString);
-        });
-
-        loginSubmit.on('click', function () {
-            logIn();
         });
 
         //reloads articles according to what is entered in the searchbar
@@ -313,12 +302,6 @@
             removeFromCart(sessionId, id);
             checkCartAmount(sessionId);
         });
-
-        $('#cartButton').on('click', function() {
-            fillCartModal();
-        });
-
-        admin();
     });
 </script>
 
