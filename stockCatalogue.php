@@ -47,8 +47,8 @@ if ($_SERVER['PHP_AUTH_USER'] !== 'admin' && $_SERVER['PHP_AUTH_PW'] !== '123456
         <a class="navbar-brand">Bookstore</a>
 
         <!-- toggle button -->
-        <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNavAltMarkup"
-                aria-controls="navbarNavAltMarkup" aria-expanded="false" aria-label="Toggle navigation">
+        <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarContent"
+                aria-controls="navbarContent" aria-expanded="false" aria-label="Toggle navigation">
             <span class="navbar-toggler-icon"></span>
         </button>
 
@@ -95,7 +95,6 @@ if ($_SERVER['PHP_AUTH_USER'] !== 'admin' && $_SERVER['PHP_AUTH_PW'] !== '123456
                         </button>
                     </a>
                 </li>
-                </li>
             </ul>
         </div>
     </div>
@@ -103,13 +102,13 @@ if ($_SERVER['PHP_AUTH_USER'] !== 'admin' && $_SERVER['PHP_AUTH_PW'] !== '123456
 
 <div class="container top-container">
     <div class="row">
-        <div class="col-8">
+        <div class="col-xl-8 col-lg-4 col-md-12">
             <h3>Current Stock</h3>
         </div>
-        <div class="col-2">
+        <div class="col-xl-2 col-lg-4 col-md-6 col-sm-12">
             <button type="button" class="btn btn-outline-secondary btn-block" id="btnDetails">Toggle Details</button>
         </div>
-        <div class="col-2">
+        <div class="col-xl-2 col-lg-4 col-md-6 col-sm-12">
             <button type="button" class="btn btn-outline-secondary btn-block" id="btnLayout">Change Layout</button>
         </div>
     </div>
@@ -125,15 +124,15 @@ if ($_SERVER['PHP_AUTH_USER'] !== 'admin' && $_SERVER['PHP_AUTH_PW'] !== '123456
 <footer class="footer bg-light">
     <div class="container text-muted text-center">
         <div class="row">
-            <div class="col-4">
+            <div class="col-lg-4 col-sm-12">
                 <a href="contact.html">Imprint</a>
             </div>
-            <div class="col-4">
+            <div class="col-lg-4 col-sm-12">
                 <span>E-Mail:
                     <a href="mailto:someone@example.com">totalEchte@adresse.de</a>
                 </span>
             </div>
-            <div class="col-4">
+            <div class="col-lg-4 col-sm-12">
                 <span>&copy; Copyright:
                     <a href="https://www.htw-dresden.de/startseite.html">HTW Dresden</a>
                 </span>

@@ -107,3 +107,40 @@ function checkOut() {
         }
     })
 }
+
+function checkCreditCard() {
+    let ccNumber = $('#ccNumber').val();
+    let ccLabel = $('#ccResult');
+    $.ajax({
+        url: 'php/ws_client.php',
+        type: 'POST',
+        data: {ccNumber: ccNumber},
+        success: function (data) {
+            if (data === 'true') {
+                ccLabel.empty();
+                ccLabel.append("Credit Card valid");
+            } else {
+                ccLabel.empty();
+                ccLabel.append("Credit Card invalid");
+            }
+        }
+    })
+}
+
+function checkBankCode() {
+    let bankCode = $('#bcNumber').val();
+    let result = $('#bcResult');
+
+
+    $.ajax({
+        url: 'php/ws_client.php',
+        type: 'POST',
+        data: {bankCode: bankCode},
+        success: function (data) {
+            result.empty();
+            result.append(data);
+        }, error: function (data) {
+            console.log('BankCode-Webservice Error');
+        }
+    })
+}

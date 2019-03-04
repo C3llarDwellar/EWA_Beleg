@@ -32,23 +32,26 @@
     <!-- overall functionality -->
     <script src="javascript/pageFunctions.js"></script>
 
+    <!-- Google API -->
+    <script src="javascript/googleBooks.js"></script>
+
     <title>Bookstore of Group G12</title>
 </head>
 <body>
 
 <!--navbar header-->
-<nav class="navbar navbar-expand-md navbar-light bg-light fixed-top">
+<nav class="navbar navbar-expand-lg navbar-light bg-light fixed-top">
     <div class="container">
         <!-- brand -->
         <a class="navbar-brand">Bookstore</a>
 
         <!-- toggle button -->
-        <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNavAltMarkup"
-                aria-controls="navbarNavAltMarkup" aria-expanded="false" aria-label="Toggle navigation">
+        <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarContent"
+                aria-controls="navbarContent" aria-expanded="false" aria-label="Toggle navigation">
             <span class="navbar-toggler-icon"></span>
         </button>
 
-        <div class="navbar-collapse collapse" id="navbarContent">
+        <div class="collapse navbar-collapse" id="navbarContent">
 
             <!-- left elements -->
             <ul class="navbar-nav mr-auto">
@@ -191,13 +194,18 @@
 <!--main-->
 <main class="container top-container bottom-container">
     <div class="row">
-        <div class="col-9 text-justify" id="article">
-            <h3>Main content section</h3>
+        <div class="col-lg-8 col-md-12" id="article">
+            <h3>Our Products</h3>
         </div>
-        <div class="col-3" id="aside">
-            <h3 id="news">News section</h3>
-            <!--lorem ipsum placeholder-->
-            <span>Als nächstes muss es möglich sein, die Bücher zu bestellen.</span>
+        <div class="col-lg-4 col-md-12" id="aside">
+            <h3 id="news">Google Books</h3>
+
+            <form>
+                <input id="googleSearch" type="text" class="form-control" name="search" placeholder="Search Google Books...">
+            </form>
+            <div id="googleBooks">
+
+            </div>
         </div>
     </div>
 </main>
@@ -208,15 +216,15 @@
 <footer class="footer bg-light">
     <div class="container text-muted text-center">
         <div class="row">
-            <div class="col-4">
+            <div class="col-lg-4 col-sm-12">
                 <a href="contact.html">Imprint</a>
             </div>
-            <div class="col-4">
+            <div class="col-lg-4 col-sm-12">
                 <span>E-Mail:
                     <a href="mailto:someone@example.com">totalEchte@adresse.de</a>
                 </span>
             </div>
-            <div class="col-4">
+            <div class="col-lg-4 col-sm-12">
                 <span>&copy; Copyright:
                     <a href="https://www.htw-dresden.de/startseite.html">HTW Dresden</a>
                 </span>
@@ -234,7 +242,7 @@
     let htmlString = "";    //string that is filled with dynamic html
 
     let search = $('#search'); //search bar
-    let searchString;       //what's in the search bar
+    let googleSearch = $('#googleSearch'); //google search bar
 
     let addToCartButton = $('#btnAddToCart');
     let removeFromCartButton = $('#btnRemoveFromCart');
@@ -276,7 +284,7 @@
 
         //reloads articles according to what is entered in the searchbar
         search.keyup(function () {
-            searchString = search.val();
+            let searchString = search.val();
 
             $.ajax({
                 url: 'php/htmlGeneration.php',
@@ -301,6 +309,18 @@
             let sessionId = sessionStorage['uid'];
             removeFromCart(sessionId, id);
             checkCartAmount(sessionId);
+        });
+
+        $('#cartButton').on('click', function() {
+            fillCartModal();
+        });
+
+        admin();
+
+        googleSearch.keyup(function () {
+            let searchString = googleSearch.val();
+
+            generateGoogleBooks(searchString);
         });
     });
 </script>

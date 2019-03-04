@@ -9,32 +9,6 @@
 include "databaseOperations.php";
 
 $config = parse_ini_file("../resources/configuration/app.ini");
-/*
-$result = selectAllBooks("localhost", "G12", "ru37w", "g12");
-
-
-$id = [];
-$isbn = [];
-$title = [];
-$author = [];
-$publisher = [];
-$price = [];
-$stock = [];
-$summary = [];
-$weight = [];
-
-while ($row = $result->fetch_assoc()) {
-    array_push($id, $row["ProduktID"]);
-    array_push($isbn, $row["Produktcode"]);
-    array_push($title, $row["Produkttitel"]);
-    array_push($author, $row["Autorname"]);
-    array_push($publisher, $row["Verlagsname"]);
-    array_push($price, $row["PreisNetto"]);
-    array_push($stock, $row["Lagerbestand"]);
-    array_push($summary, $row["Kurzinhalt"]);
-    array_push($weight, $row["Gewicht"]);
-}
-*/
 
 
 if (isset($_GET['action']) && !empty($_GET['action'])) {
@@ -68,6 +42,16 @@ if (isset($_GET['action']) && !empty($_GET['action'])) {
             break;
         case 'admin' :
             generateAdminLink();
+            break;
+        case 'googleBooks':
+            if (isset($_GET['title']) && isset($_GET['isbn']) && isset($_GET['identifierType']) && isset($_GET['infoLink']) && isset($_GET['thumbnail'])) {
+                $title = $_GET['title'];
+                $isbn = $_GET['isbn'];
+                $identifierType = $_GET['identifierType'];
+                $infoLink = $_GET['infoLink'];
+                $thumbnail = $_GET['thumbnail'];
+                generateGoogleBooks($title, $isbn, $identifierType, $infoLink, $thumbnail);
+        }
             break;
     }
 }
@@ -145,7 +129,7 @@ function generateCards()
         }
 
         $htmlString .= "
-            <div class='col-3 d-flex align-items-stretch'>
+            <div class='col-lg-3 col-md-6 col-sm-12 d-flex align-items-stretch'>
                 <div class='card w-100 h-100' data-id='" . $id[$i] . "' data-product='" . $title[$i] . "'>
                     <div class='card-body'>
                         <h5 class='card-title'>" . $title[$i] . "</h5>
@@ -192,7 +176,7 @@ function searchRequest()
             if (strpos($lowerTitle, $search) !== false || strpos($lowerAuthor, $search) !== false) {
 
                 $cardString = "
-            <div class='col-3'>
+            <div class='col-lg-3 col-md-6 col-sm-12 d-flex align-items-stretch'>
                 <div class='card w-100 h-100' data-id='" . $id[$i] . "' data-product='" . $title[$i] . "'>
                     <div class='card-body'>
                         <h5 class='card-title'>" . $title[$i] . "</h5>
@@ -250,19 +234,19 @@ function stockInitialize($info, $layout)
                 <div class='card w-100 border-danger'>
                     <div class='card-body'>
                         <div class='row'>
-                            <div class='col-5'>
+                            <div class='col-xl-5 col-lg-7 col-md-12'>
                                 <span>" . $title[$i] . "</span>
                             </div>
-                            <div class='col-4'>
+                            <div class='col-xl-4 col-lg-5 col-md-12'>
                                 <span>" . $isbn[$i] . "</span>
                             </div>
-                            <div class='col-1'>
+                            <div class='col-xl-1 col-md-4'>
                                 <span>" . $stock[$i] . "</span>
                             </div>
-                            <div class='col-1'>
+                            <div class='col-xl-1 col-md-4'>
                                 <span>" . $price[$i] . "€</span>                        
                             </div>
-                            <div class='col-1'>
+                            <div class='col-xl-1 col-md-4'>
                                 <span>" . $stock[$i] * $price[$i] . "€</span>                        
                             </div>
                         </div>
@@ -276,7 +260,7 @@ function stockInitialize($info, $layout)
                 $htmlString .= "<div class='row'>";
             }
 
-            $htmlString .= "<div class='col-3 d-flex align-items-stretch'>
+            $htmlString .= "<div class='col-lg-3 col-md-6 col-sm-12 d-flex align-items-stretch'>
                 <div class='card w-100 h-100 border-danger'>
                     <div class='card-body'>
                         <div class='row'>
@@ -312,17 +296,18 @@ function stockInitialize($info, $layout)
                 <div class='card w-100 border-danger'>
                     <div class='card-body'>
                         <div class='row'>
-                            <div class='col-9'>
+                            <div class='col-xl-5 col-lg-7 col-md-12'>
                                 <span>" . $title[$i] . "</span>
                             </div>
-                            <div class='col-1'>
+                            <div class='col-xl-1 col-md-4'>
                                 <span>" . $stock[$i] . "</span>
                             </div>
-                            <div class='col-1'>
+                            <div class='col-xl-1 col-md-4'>
                                 <span>" . $price[$i] . "€</span>                        
                             </div>
-                            <div class='col-1'>
+                            <div class='col-xl-1 col-md-4'>
                                 <span>" . $stock[$i] * $price[$i] . "€</span>                        
+                            </div>                     
                             </div>
                         </div>
                     </div>
@@ -335,7 +320,7 @@ function stockInitialize($info, $layout)
                 $htmlString .= "<div class='row'>";
             }
 
-            $htmlString .= "<div class='col-3 d-flex align-items-stretch'>
+            $htmlString .= "<div class='col-lg-3 col-md-6 col-sm-12 d-flex align-items-stretch'>
                 <div class='card w-100 h-100 border-danger'>
                     <div class='card-body'>
                         <div class='row'>
@@ -366,7 +351,6 @@ function stockInitialize($info, $layout)
 
     echo $htmlString;
 }
-
 
 function generateLogInButton() {
     echo "<button type=\"button\" class=\"btn btn-light\" id=\"btnLogIn\" data-toggle=\"modal\" data-target=\"#logInModal\">Log In</button>";
@@ -411,6 +395,8 @@ function cartContent() {
             }
 
             $htmlString .= "<br>Will be sent to: ".$userName.", ".$address;
+            $htmlString .= "<br>".generateCreditCardForm();
+            $htmlString .= "<br>".generateBankCodeForm();
             $htmlString .= "<br><button class='btn btn-light' onclick='checkOut()'>Check Out</button>";
 
             echo $htmlString;
@@ -418,7 +404,30 @@ function cartContent() {
     } else echo "Log in to create a cart.";
 }
 
+function generateCreditCardForm() {
+    echo "<form action='javascript: checkCreditCard()'>
+	<input id='ccNumber' name='ccNumber' type='text' class='form-control'>
+	<input type=submit value='Check Credit Card' class='btn btn-light'>
+	<label id='ccResult'></label>
+	</form>";
+}
+
+function generateBankCodeForm() {
+    echo "<form action='javascript: checkBankCode()'>
+        <input id='bcNumber' name='bcNumber' type='text' class='form-control'>
+        <input type='submit' value='Check Bank Code' class='btn btn-light'>
+        <label id='bcResult'></label>
+    </form>";
+}
+
 function generateAdminLink() {
     echo "<a class=\"nav-link\" href=\"stockCatalogue.php\">Administration</a>";
+}
+
+function generateGoogleBooks($title, $isbn, $identifierType, $infoLink, $thumbnail) {
+    $thumbnailImage = "<img src='".$thumbnail."'>";
+    $htmlString = "<a href='".$infoLink."'><div>".$thumbnailImage."".$title."</div><div>".$identifierType.": ".$isbn."</a></div>";
+
+    echo $htmlString;
 }
 ?>
