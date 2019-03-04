@@ -93,7 +93,7 @@
 
                 <!-- registration button -->
                 <li class="nav-item">
-                    <a href="sites/signUp.html">
+                    <a href="signUp.html">
                         <button type="button" class="btn btn-light" id="btnSignUp">
                             Sign Up
                         </button>
@@ -206,7 +206,7 @@
     <div class="container text-muted text-center">
         <div class="row">
             <div class="col-4">
-                <a href="sites/contact.html">Imprint</a>
+                <a href="contact.html">Imprint</a>
             </div>
             <div class="col-4">
                 <span>E-Mail:
