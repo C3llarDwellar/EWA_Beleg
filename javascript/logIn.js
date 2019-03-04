@@ -100,8 +100,9 @@ function admin() {
                     type: 'GET',
                     data: {action: 'admin'},
                     success: function (data) {
-                        $('#adminArea').empty();
-                        $('#adminArea').append(data);
+                        let adminArea = $('#adminArea');
+                        adminArea.empty();
+                        adminArea.append(data);
                     }
                 });
             }
