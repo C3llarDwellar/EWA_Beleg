@@ -22,26 +22,26 @@
 
     <!-- login -->
     <script src="javascript/logIn.js"></script>
+
+    <!-- encryption -->
     <script src="javascript/md5.js"></script>
+
+    <!-- cart -->
+    <script src="javascript/cartInteraction.js"></script>
+
+    <!-- overall functionality -->
+    <script src="javascript/pageFunctions.js"></script>
+
+    <!-- Google API -->
+    <script src="javascript/googleBooks.js"></script>
 
     <title>Stock Catalogue</title>
 </head>
 <body>
 
 
-<?php
-
-if ($_SERVER['PHP_AUTH_USER'] !== 'admin' && $_SERVER['PHP_AUTH_PW'] !== '123456') {
-    header('WWW-Authenticate: Basic realm="Admin Page"');
-    header('HTTP/1.0 401 Unauthorized');
-    echo "There was an error";
-    exit;
-}
-?>
-
-
-<!--navbar header-->
-<nav class="navbar navbar-expand-md navbar-light bg-light fixed-top">
+<!-- navbar header -->
+<nav class="navbar navbar-expand-lg navbar-light bg-light fixed-top">
     <div class="container">
         <!-- brand -->
         <a class="navbar-brand">Bookstore</a>
@@ -52,7 +52,7 @@ if ($_SERVER['PHP_AUTH_USER'] !== 'admin' && $_SERVER['PHP_AUTH_PW'] !== '123456
             <span class="navbar-toggler-icon"></span>
         </button>
 
-        <div class="navbar-collapse collapse" id="navbarContent">
+        <div class="collapse navbar-collapse" id="navbarContent">
 
             <!-- left elements -->
             <ul class="navbar-nav mr-auto">
@@ -73,18 +73,23 @@ if ($_SERVER['PHP_AUTH_USER'] !== 'admin' && $_SERVER['PHP_AUTH_PW'] !== '123456
                         </div>
                     </div>
                 </li>
+
+                <!-- administration -->
+                <li id="adminArea" class="nav-item">
+
+                </li>
             </ul>
 
             <!-- right elements -->
             <ul class="navbar-nav ml-auto">
-                <!-- login button -->
+                <!-- cart -->
                 <li class="nav-item">
-                    <!-- login button -->
-                <li class="nav-item">
-                    <button type="button" class="btn btn-light" id="btnLogIn" data-toggle="modal"
-                            data-target="#logInModal">
-                        Log in
+                    <button type="button" class="btn btn-light" id="cartButton" data-toggle="modal" data-target="#cartModal">
                     </button>
+                </li>
+
+                <!-- login button -->
+                <li class="nav-item" id="logInLi">
                 </li>
 
                 <!-- registration button -->
@@ -99,6 +104,57 @@ if ($_SERVER['PHP_AUTH_USER'] !== 'admin' && $_SERVER['PHP_AUTH_PW'] !== '123456
         </div>
     </div>
 </nav>
+
+<!--dialog form for logging in-->
+<div class="modal fade" role="dialog" id="logInModal">
+    <div class="modal-dialog modal-dialog-centered" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title">Log In</h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="modal-body">
+
+                <!-- actual form for logging in -->
+                <form id="logInForm" action="javascript:logIn();">
+                    <!-- username -->
+                    <div class="form-group">
+                        <label for="logInFormUser">Username</label>
+                        <input type="text" name="user" class="form-control" id="logInFormUser" minlength="2" required>
+                    </div>
+                    <!-- password -->
+                    <div class="form-group">
+                        <label for="logInFormPassword">Password</label>
+                        <input type="password" name="password" class="form-control" id="logInFormPassword" minlength="2" required>
+                    </div>
+
+                    <input type="submit" value="Log In">
+                </form>
+
+                <div class="row" id="logInFormResult"></div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- Cart Modal -->
+<div class="modal fade" role="dialog" id="cartModal">
+    <div class="modal-dialog modal-dialog-centered" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title">Shopping Cart</h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">x</span>
+                </button>
+            </div>
+            <div class="modal-body">
+                <div id="cartContent"></div>
+            </div>
+        </div>
+    </div>
+</div>
 
 <div class="container top-container">
     <div class="row">
@@ -121,7 +177,7 @@ if ($_SERVER['PHP_AUTH_USER'] !== 'admin' && $_SERVER['PHP_AUTH_PW'] !== '123456
 
 <!--footer-->
 <!--"fixed-bottom" can be added-->
-<footer class="footer bg-light">
+<footer class="footer bg-light fixed-bottom">
     <div class="container text-muted text-center">
         <div class="row">
             <div class="col-lg-4 col-sm-12">
@@ -151,7 +207,7 @@ if ($_SERVER['PHP_AUTH_USER'] !== 'admin' && $_SERVER['PHP_AUTH_PW'] !== '123456
 
     $(document).ready(function () {
         $.ajax({
-            url: '../php/htmlGeneration.php',
+            url: 'php/htmlGeneration.php',
             type: 'GET',
             data: {
                 action: 'stockInit',
@@ -172,7 +228,7 @@ if ($_SERVER['PHP_AUTH_USER'] !== 'admin' && $_SERVER['PHP_AUTH_PW'] !== '123456
             }
 
             $.ajax({
-                url: '../php/htmlGeneration.php',
+                url: 'php/htmlGeneration.php',
                 type: 'GET',
                 data: {
                     action: 'stockInit',
@@ -195,7 +251,7 @@ if ($_SERVER['PHP_AUTH_USER'] !== 'admin' && $_SERVER['PHP_AUTH_PW'] !== '123456
             }
 
             $.ajax({
-                url: '../php/htmlGeneration.php',
+                url: 'php/htmlGeneration.php',
                 type: 'GET',
                 data: {
                     action: 'stockInit',

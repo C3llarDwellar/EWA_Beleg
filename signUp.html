@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
-    <meta name="desctription" content="">
+    <meta name="description" content="">
     <meta name="author" content="">
 
     <!-- bootstrap integration -->
@@ -22,12 +22,24 @@
 
     <!-- login -->
     <script src="javascript/logIn.js"></script>
+
+    <!-- encryption -->
     <script src="javascript/md5.js"></script>
+
+    <!-- cart -->
+    <script src="javascript/cartInteraction.js"></script>
+
+    <!-- overall functionality -->
+    <script src="javascript/pageFunctions.js"></script>
+
+    <!-- Google API -->
+    <script src="javascript/googleBooks.js"></script>
 
     <title>Sign Up</title>
 </head>
 <body>
-<nav class="navbar navbar-expand-md navbar-light bg-light fixed-top">
+<!-- navbar header -->
+<nav class="navbar navbar-expand-lg navbar-light bg-light fixed-top">
     <div class="container">
         <!-- brand -->
         <a class="navbar-brand">Bookstore</a>
@@ -38,7 +50,7 @@
             <span class="navbar-toggler-icon"></span>
         </button>
 
-        <div class="navbar-collapse collapse" id="navbarContent">
+        <div class="collapse navbar-collapse" id="navbarContent">
 
             <!-- left elements -->
             <ul class="navbar-nav mr-auto">
@@ -61,31 +73,37 @@
                 </li>
 
                 <!-- administration -->
-                <li class="nav-item">
-                    <a class="nav-link" href="stockCatalogue.php">Administration</a>
+                <li id="adminArea" class="nav-item">
+
                 </li>
             </ul>
 
             <!-- right elements -->
             <ul class="navbar-nav ml-auto">
-                <!-- login button -->
+                <!-- cart -->
                 <li class="nav-item">
-                    <button type="button" class="btn btn-light" id="btnLogIn" data-toggle="modal" data-target="#logInModal">
-                        Log in
+                    <button type="button" class="btn btn-light" id="cartButton" data-toggle="modal" data-target="#cartModal">
                     </button>
+                </li>
+
+                <!-- login button -->
+                <li class="nav-item" id="logInLi">
                 </li>
 
                 <!-- registration button -->
                 <li class="nav-item">
-                    <button type="button" class="btn btn-light" id="btnSignUp" data-toggle="modal"
-                            data-target="#signUpModal">Sign Up
-                    </button>
+                    <a href="signUp.html">
+                        <button type="button" class="btn btn-light" id="btnSignUp">
+                            Sign Up
+                        </button>
+                    </a>
                 </li>
             </ul>
         </div>
     </div>
 </nav>
 
+<!--dialog form for logging in-->
 <div class="modal fade" role="dialog" id="logInModal">
     <div class="modal-dialog modal-dialog-centered" role="document">
         <div class="modal-content">
@@ -114,6 +132,23 @@
                 </form>
 
                 <div class="row" id="logInFormResult"></div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- Cart Modal -->
+<div class="modal fade" role="dialog" id="cartModal">
+    <div class="modal-dialog modal-dialog-centered" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title">Shopping Cart</h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">x</span>
+                </button>
+            </div>
+            <div class="modal-body">
+                <div id="cartContent"></div>
             </div>
         </div>
     </div>
@@ -215,5 +250,27 @@
         }
     </script>
 </main>
+
+<!--footer-->
+<!--"fixed-bottom" can be added-->
+<footer class="footer bg-light fixed-bottom">
+    <div class="container text-muted text-center">
+        <div class="row">
+            <div class="col-lg-4 col-sm-12">
+                <a href="contact.html">Imprint</a>
+            </div>
+            <div class="col-lg-4 col-sm-12">
+                <span>E-Mail:
+                    <a href="mailto:someone@example.com">totalEchte@adresse.de</a>
+                </span>
+            </div>
+            <div class="col-lg-4 col-sm-12">
+                <span>&copy; Copyright:
+                    <a href="https://www.htw-dresden.de/startseite.html">HTW Dresden</a>
+                </span>
+            </div>
+        </div>
+    </div>
+</footer>
 </body>
 </html>

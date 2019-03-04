@@ -57,7 +57,7 @@
             <ul class="navbar-nav mr-auto">
                 <!-- home-button -->
                 <li class="nav-item">
-                    <a class="nav-link active" href="#">Home <span class="sr-only">(current)</span></a>
+                    <a class="nav-link active" href="index.php">Home <span class="sr-only">(current)</span></a>
                 </li>
 
                 <!-- dropdown-menu -->
@@ -213,7 +213,7 @@
 
 <!--footer-->
 <!--"fixed-bottom" can be added-->
-<footer class="footer bg-light">
+<footer class="footer bg-light fixed-bottom">
     <div class="container text-muted text-center">
         <div class="row">
             <div class="col-lg-4 col-sm-12">
