@@ -296,7 +296,7 @@ function stockInitialize($info, $layout)
                 <div class='card w-100 border-danger'>
                     <div class='card-body'>
                         <div class='row'>
-                            <div class='col-xl-5 col-lg-7 col-md-12'>
+                            <div class='col-lg-9 col-md-12'>
                                 <span>" . $title[$i] . "</span>
                             </div>
                             <div class='col-xl-1 col-md-4'>
