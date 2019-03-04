@@ -20,9 +20,37 @@ if (isset($_POST["ccNumber"])) {
 
 if (isset($_POST['bankCode'])){
     $bankcode = $_POST['bankCode'];
-    $SOAPClient = new SoapClient('http://www.thomas-bayer.com/axis2/services/BLZService?wsdl');
-    $result = $SOAPClient->getBank($bankcode);
 
-    echo 'lul';
+    class RequestType
+    {  /** * Bankleitzahl   * @var string */
+        public $blz;
+    }
+    class ResponseType
+    {  /**     * Details Struktur    * @var DetailsType   */
+        public $details;
+    }
+    class DetailsType
+    {   /**     * Bank     * @var string     */
+        public $bezeichnung;
+        public $bic; /**    * BIC    * @var string     */
+        public $ort; /**    * Ort     * @var string    */
+        public $plz;    /**     * Postleitzahl     * @var string     */
+    }
+
+    $options = array();
+    $options['encoding']                        = 'ISO-8859-15';
+    $options['soap_version']                    =  SOAP_1_2;
+    $options['classmap']                        =  array();
+    $options['classmap']['getBankType']         = 'RequestType';
+    $options['classmap']['detailsType']         = 'DetailsType';
+    $options['classmap']['getBankResponseType'] = 'ResponseType';
+
+    $bank = new RequestType;
+    $bank->blz = $bankcode;
+
+    $SOAPClient = new SoapClient('http://www.thomas-bayer.com/axis2/services/BLZService?wsdl', $options);
+    $result = $SOAPClient->getBank($bank);
+
+    echo "BLZ: " . $bank->blz . " Bank: " . $result->details->bezeichnung;
 }
 ?>

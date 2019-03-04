@@ -129,17 +129,18 @@ function checkCreditCard() {
 
 function checkBankCode() {
     let bankCode = $('#bcNumber').val();
-    let bank = $('#bank');
-    let postcode = $('#postcode');
+    let result = $('#bcResult');
+
 
     $.ajax({
         url: 'php/ws_client.php',
         type: 'POST',
         data: {bankCode: bankCode},
         success: function (data) {
-            console.log(data);
+            result.empty();
+            result.append(data);
         }, error: function (data) {
-            console.log('iksde');
+            console.log('BankCode-Webservice Error');
         }
     })
 }

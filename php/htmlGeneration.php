@@ -416,8 +416,7 @@ function generateBankCodeForm() {
     echo "<form action='javascript: checkBankCode()'>
         <input id='bcNumber' name='bcNumber' type='text' class='form-control'>
         <input type='submit' value='Check Bank Code' class='btn btn-light'>
-        <label id='bank'></label>
-        <label id='postcode'></label>
+        <label id='bcResult'></label>
     </form>";
 }
 
