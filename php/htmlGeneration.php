@@ -427,7 +427,7 @@ function generateAdminLink() {
 }
 
 function generateGoogleBooks($title, $isbn, $identifierType, $infoLink, $thumbnail) {
-    $thumbnailImage = "<img src='".$thumbnail."'/>";
+    $thumbnailImage = "<img src='".$thumbnail."' alt='Thumbnail for ".$title."'/>";
     $htmlString = "<a href='".$infoLink."'><div>".$thumbnailImage."".$title."</div><div>".$identifierType.": ".$isbn."</a></div>";
 
     echo $htmlString;
