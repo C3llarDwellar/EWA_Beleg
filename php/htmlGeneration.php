@@ -369,20 +369,22 @@ function cartContent() {
 
             $cart = $_SESSION['cart'];
             foreach ($cart AS $productId => $amount) {
-                $book = getBookById($productId);
-                $title = "";
-                $price = 0;
-                while ($row = $book->fetch_assoc()) {
-                    $title = $row['Produkttitel'];
-                    $price = $row['PreisNetto'] * $amount;
-                    $totalPrice = $totalPrice + $price;
-                }
+                if ($amount > 0) {
+                    $book = getBookById($productId);
+                    $title = "";
+                    $price = 0;
+                    while ($row = $book->fetch_assoc()) {
+                        $title = $row['Produkttitel'];
+                        $price = $row['PreisNetto'] * $amount;
+                        $totalPrice = $totalPrice + $price;
+                    }
 
-                $htmlString .= "<div class='row'>";
+                    $htmlString .= "<div class='row'>";
                     $htmlString .= "<div class='col-4'>".$title."</div>";
                     $htmlString .= "<div class='col-2'>".$amount." times</div>";
                     $htmlString .= "<div class='col-3'>".$price."€</div>";
-                $htmlString .= "</div>";
+                    $htmlString .= "</div>";
+                }
             }
 
             $htmlString .= "<br>Total Price: ".$totalPrice."€";
@@ -425,7 +427,7 @@ function generateAdminLink() {
 }
 
 function generateGoogleBooks($title, $isbn, $identifierType, $infoLink, $thumbnail) {
-    $thumbnailImage = "<img src='".$thumbnail."'>";
+    $thumbnailImage = "<img src='".$thumbnail."' alt='Thumbnail for ".$title."'/>";
     $htmlString = "<a href='".$infoLink."'><div>".$thumbnailImage."".$title."</div><div>".$identifierType.": ".$isbn."</a></div>";
 
     echo $htmlString;

@@ -180,15 +180,20 @@
 <footer class="footer bg-light fixed-bottom">
     <div class="container text-muted text-center">
         <div class="row">
-            <div class="col-lg-4 col-sm-12">
+            <div class="col-lg-3 col-sm-12">
+                <button id="fontPlus" class="btn btn-light">F++</button>
+                <button id="fontNormal" class="btn btn-light">F</button>
+                <button id="fontMinus" class="btn btn-light">F--</button>
+            </div>
+            <div class="col-lg-3 col-sm-12">
                 <a href="contact.html">Imprint</a>
             </div>
-            <div class="col-lg-4 col-sm-12">
+            <div class="col-lg-3 col-sm-12">
                 <span>E-Mail:
                     <a href="mailto:someone@example.com">totalEchte@adresse.de</a>
                 </span>
             </div>
-            <div class="col-lg-4 col-sm-12">
+            <div class="col-lg-3 col-sm-12">
                 <span>&copy; Copyright:
                     <a href="https://www.htw-dresden.de/startseite.html">HTW Dresden</a>
                 </span>
